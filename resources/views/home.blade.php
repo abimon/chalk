@@ -135,7 +135,7 @@
                 <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
                 <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
                 <div class="d-flex align-items-center">
-                    <img class="flex-shrink-0 rounded-circle" src="img/testimonial-1.jpg" alt="">
+                    <img class="flex-shrink-0 rounded-circle" src="{{asset('storage/assets/img/testimonial-1.jpg')}}" alt="">
                     <div class="ms-3">
                         <h5 class="mb-1">Client Name</h5>
                         <span>Profession</span>
@@ -146,7 +146,7 @@
                 <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
                 <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
                 <div class="d-flex align-items-center">
-                    <img class="flex-shrink-0 rounded-circle" src="img/testimonial-2.jpg" alt="">
+                    <img class="flex-shrink-0 rounded-circle" src="{{asset('storage/assets/img/testimonial-2.jpg')}}" alt="">
                     <div class="ms-3">
                         <h5 class="mb-1">Client Name</h5>
                         <span>Profession</span>
@@ -157,7 +157,7 @@
                 <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
                 <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
                 <div class="d-flex align-items-center">
-                    <img class="flex-shrink-0 rounded-circle" src="img/testimonial-3.jpg" alt="">
+                    <img class="flex-shrink-0 rounded-circle" src="{{asset('storage/assets/img/testimonial-3.jpg')}}" alt="">
                     <div class="ms-3">
                         <h5 class="mb-1">Client Name</h5>
                         <span>Profession</span>
@@ -168,7 +168,7 @@
                 <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
                 <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
                 <div class="d-flex align-items-center">
-                    <img class="flex-shrink-0 rounded-circle" src="img/testimonial-4.jpg" alt="">
+                    <img class="flex-shrink-0 rounded-circle" src="{{asset('storage/assets/img/testimonial-4.jpg')}}" alt="">
                     <div class="ms-3">
                         <h5 class="mb-1">Client Name</h5>
                         <span>Profession</span>
