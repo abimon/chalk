@@ -40,8 +40,8 @@
                             </div>
                             <div class="text-center p-4">
                                 <a class="d-block h5 mb-2" href="">Fresh Tomato</a>
-                                <span class="text-primary me-1">$19.00</span>
-                                <span class="text-body text-decoration-line-through">$29.00</span>
+                                <span class="text-primary me-1">KShs 100.00</span>
+                                <span class="text-body text-decoration-line-through">KShs 120.00</span>
                             </div>
                             <div class="d-flex border-top">
                                 <small class="w-50 text-center border-end py-2">
