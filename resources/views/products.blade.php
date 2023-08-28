@@ -23,7 +23,7 @@
                         <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="/products/fruits">Seedlings </a>
                     </li>
                     <li class="nav-item me-0">
-                        <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="/products/cerials">Cerials</a>
+                        <a class="btn btn-outline-primary border-2" data-bs-toggle="pill" href="/products/cerials">Cereals</a>
                     </li>
                 </ul>
             </div>

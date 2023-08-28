@@ -68,14 +68,15 @@
                     <a href="/products" class="nav-item nav-link">Farm Products</a>
                     <a href="/literature" class="nav-item nav-link">Literature</a>
                     <a href="/lifestyle" class="nav-item nav-link">Lifestyle Support Center</a>
-                    <div class="nav-item dropdown">
+                    <!-- <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu m-0">
                             <a href="/blog" class="dropdown-item">Articles</a>
                             <a href="/feature" class="dropdown-item">Our Features</a>
                             <a href="/testimonial" class="dropdown-item">Testimonial</a>
                         </div>
-                    </div>
+                    </div> -->
+                    <a href="/articles" class="nav-item nav-link">Articles</a>
                     <a href="/contact" class="nav-item nav-link">Contact Us</a>
                 </div>
                 <div class="d-none d-lg-flex ms-2">
