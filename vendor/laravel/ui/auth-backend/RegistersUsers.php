@@ -2,6 +2,9 @@
 
 namespace Illuminate\Foundation\Auth;
 
+use App\Models\County;
+use App\Models\Nation;
+use App\Models\Town;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,7 +21,15 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        return view('auth.register');
+        $towns=Town::all();
+        $county=County::all();
+        $nations=Nation::all();
+        $data=[
+            'towns'=>$towns,
+            'counties'=>$county,
+            'nations'=>$nations
+        ];
+        return view('auth.register',$data);
     }
 
     /**

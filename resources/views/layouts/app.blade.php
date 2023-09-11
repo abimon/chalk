@@ -37,13 +37,11 @@
         <div class="spinner-border text-primary" role="status"></div>
     </div>
      <!--Spinner End -->
-
-
     <!-- Navbar Start -->
     <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
         <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
             <div class="col-lg-6 px-5 text-start">
-                <small><i class="fa fa-map-marker-alt me-2"></i>Beackon Plaza, Gate B, Juja</small>
+                <small><i class="fa fa-map-marker-alt me-2"></i>Chalk Home Complex; Off Namba-Ndiru Road; Homa-Bay County</small>
                 <small class="ms-4"><i class="fa fa-envelope me-2"></i>info@chalkorganic.com</small>
             </div>
             <div class="col-lg-6 px-5 text-end">
@@ -57,7 +55,7 @@
 
         <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
             <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
-                <h1 class="fw-bold text-primary m-0">CHALK <span class="text-secondary">Organic</span></h1>
+                <h1 class="fw-bold text-primary m-0">Health & Life <span class="text-secondary">Center</span></h1>
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
@@ -66,26 +64,33 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="/" class="nav-item nav-link">Home</a>
                     <a href="/products" class="nav-item nav-link">Farm Products</a>
-                    <a href="/literature" class="nav-item nav-link">Literature</a>
+                    <a href="/products/Literature" class="nav-item nav-link">Literature</a>
                     <a href="/lifestyle" class="nav-item nav-link">Lifestyle Support Center</a>
-                    <!-- <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu m-0">
-                            <a href="/blog" class="dropdown-item">Articles</a>
-                            <a href="/feature" class="dropdown-item">Our Features</a>
-                            <a href="/testimonial" class="dropdown-item">Testimonial</a>
-                        </div>
-                    </div> -->
                     <a href="/articles" class="nav-item nav-link">Articles</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link" data-bs-toggle="dropdown">
+                            <small class="fa fa-search text-body"></small>
+                        </a>
+                        <div class="dropdown-menu ">
+                            <form action="/search" method="post" class="m-3">
+                                @csrf
+                                <input type="text" name="search" id="" class="form-control" placeholder="Keyword...">
+                            </form>
+                        </div>
+                    </div>
                     <a href="/contact" class="nav-item nav-link">Contact Us</a>
+                    
                 </div>
-                <div class="d-none d-lg-flex ms-2">
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="">
-                        <small class="fa fa-search text-body"></small>
-                    </a>
+                <div class="d-none d-lg-flex ms-2">  
+                    @guest
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="/login">
                         <small class="fa fa-user text-body"></small>
                     </a>
+                    @else
+                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="/dashboard">
+                        <small class="fa fa-user text-body"></small>
+                    </a>
+                    @endif
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="/cart">
                         <small class="fa fa-shopping-bag text-body"></small>
                     </a>
@@ -101,8 +106,8 @@
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
-                    <h1 class="fw-bold text-primary mb-4">CHALK <span class="text-secondary">Organic</span></h1>
-                    <p>We are your promising organic products producers and distributers. We also sell Christian literature.</p>
+                    <h1 class="fw-bold text-primary mb-4">Health & Life <span class="text-secondary">Center</span></h1>
+                    <p>We're a home. Come and visit us. We've adapted ourselves to provide your organic farming needs, your health food requirements and naturopathy. We also offer a variety of other useful products and services that might interest you. Be our guest.</p>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
                         <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-facebook-f"></i></a>
@@ -112,9 +117,9 @@
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Address</h4>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>Beackon Plaza, Gate B, Juja</p>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>Chalk Home Complex; Off Namba-Ndiru Road; Homa-Bay County</p>
                     <p><i class="fa fa-phone-alt me-3"></i>+254 722 987 365</p>
-                    <p><i class="fa fa-envelope me-3"></i>info@chalkorganic.com</p>
+                    <p><i class="fa fa-envelope me-3"></i>info@healthandlifecenter.com</p>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Quick Links</h4>
@@ -138,10 +143,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a href="#">CHALK Organic</a>, All Right Reserved.
+                        &copy; <a href="#">Health & Life Center</a>, All Right Reserved.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
-                        Designed By <a href="https://apekinc.top">AsPEKt Inc</a>
+                        Designed By <a href="https://apekinc.top">APEK INC</a>
                     </div>
                 </div>
             </div>
