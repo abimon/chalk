@@ -84,7 +84,7 @@ class OrderController extends Controller
             'TransactionDate' => '$content->TransactionDate',
             'TransAmount' => '$content->TransAmount',
             'PhoneNumber' => '$content->PhoneNumber',
-            'response' => json_encode($content)
+            'response' => json_encode($res)
         ]);
         $acc = order::where(['receipt' => '$serial'])->get();
         foreach ($acc as $ac) {
@@ -135,7 +135,7 @@ class OrderController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
         $curl_response = curl_exec($curl);
         $res = json_decode($curl_response);
-        return $res;
+        // return $res;
         if ($res->ResponseCode == 0) {
             foreach ($carts as $cart) {
                 order::create([
