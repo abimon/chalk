@@ -150,7 +150,7 @@ class OrderController extends Controller
             }
             return redirect('/orders');
         } else {
-            return response()->json('Something wrong happened. Try  again.', 400);
+           echo "<script>alert('Something wrong happened. Try  again.');</script>";
         }
     }
     function updateOrder($id)
