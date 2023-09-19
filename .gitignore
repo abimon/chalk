@@ -1,4 +1,4 @@
-.env
+# .env
 /public/storage
 .env.backup
 .env.production
