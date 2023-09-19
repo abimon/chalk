@@ -32,12 +32,12 @@
         <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header" data-logobg="skin6">
-                    <a class="navbar-brand" href="dashboard.html">
+                    <a class="navbar-brand" href="/dashboard">
                         <!-- Logo icon -->
-                        <b class="logo-icon">
-                            <!-- Dark Logo icon -->
+                        <!-- <b class="logo-icon">
                             <p>Health & Life Center</p>
-                        </b>
+                        </b> -->
+                        
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span class="logo-text">
