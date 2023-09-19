@@ -37,10 +37,10 @@
                         <!-- <b class="logo-icon">
                             <p>Health & Life Center</p>
                         </b> -->
-                        
+
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span class="logo-text">
+                        <span class="logo-text text-dark">
                             Health & Life Center
                         </span>
                     </a>
