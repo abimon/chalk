@@ -86,9 +86,9 @@ class OrderController extends Controller
             'PhoneNumber' => '$content->PhoneNumber',
             'response' => json_encode($content)
         ]);
-        $acc=order::where(['receipt'=>'$serial'])->get();
-        foreach($acc as $ac){
-            $ac->confirmed=1;
+        $acc = order::where(['receipt' => '$serial'])->get();
+        foreach ($acc as $ac) {
+            $ac->confirmed = 1;
             $ac->update();
         }
 
@@ -105,15 +105,6 @@ class OrderController extends Controller
         $phone = request()->phone;
         $receipt = 'HLC' . date('YmdHs');
         foreach ($carts  as $cart) {
-            // order::create([
-            //     'buyer_id' => $cart->buyer_id,
-            //     'product_id' => $cart->product_id,
-            //     'quantity' => $cart->quantity,
-            //     'pickup' => Auth()->user()->residence,
-            //     'more' => request()->more,
-            //     'receipt' => $receipt
-            // ]);
-            // cart::destroy($cart->id);
             $total += ($cart->price) * ($cart->quantity);
         }
         // $this->stkpush($phone,$total,$receipt);
@@ -121,7 +112,7 @@ class OrderController extends Controller
         $originalStr = $phone;
         $prefix = substr($originalStr, 0, 1);
         $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
-        $url = (env('MPESA_ENV')=='live')?'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest':'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+        $url = (env('MPESA_ENV') == 'live') ? 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest' : 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Authorization:Bearer ' . $this->generate_token()));
@@ -146,12 +137,21 @@ class OrderController extends Controller
         $res = json_decode($curl_response);
         return $res;
         if ($res->ResponseCode == 0) {
-            dd($res);
-            // return redirect('/products');
+            foreach ($carts as $cart) {
+                order::create([
+                    'buyer_id' => $cart->buyer_id,
+                    'product_id' => $cart->product_id,
+                    'quantity' => $cart->quantity,
+                    'pickup' => Auth()->user()->residence,
+                    'more' => request()->more,
+                    'receipt' => $receipt
+                ]);
+                cart::destroy($cart->id);
+            }
+            return redirect('/orders');
         } else {
             return response()->json('Something wrong happened. Try  again.', 400);
         }
-        
     }
     function updateOrder($id)
     {
