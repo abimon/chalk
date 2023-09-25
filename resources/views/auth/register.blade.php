@@ -130,6 +130,7 @@
                             </div>
                         </div>
                     </form>
+                    <p class="text-center">Already have an account? <a href="/login">Login</a></p>
                 </div>
             </div>
         </div>
