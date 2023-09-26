@@ -50,7 +50,7 @@
                                         <div class="row mb-3">
                                                 <label for="category" class="col-md-4 col-form-label text-md-end">{{ __('Order No.') }}</label>
                                                 <div class="col-md-6">
-                                                    <input type="text" name="orderNo" value="{{$order->id}}" disabled>
+                                                    <input type="hidden" name="orderNo" value="{{$order->id}}">
                                                     @error('county')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
