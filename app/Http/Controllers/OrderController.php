@@ -168,7 +168,8 @@ class OrderController extends Controller
         $order=order::where('id',request()->orderNo)->first();
         $item=product::where('id',$order->product_id)->first();
         $total=($order->qty)*($item->price);
-        return [$order,$item];
+        // return [$order,$item];
+        $receipt=$order->receipt;
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
         $originalStr = request()->phone;
         $prefix = substr($originalStr, 0, 1);
