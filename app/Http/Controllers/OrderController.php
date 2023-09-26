@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\cart;
 use App\Models\Mpesa;
 use App\Models\order;
+use App\Models\product;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -36,30 +37,25 @@ class OrderController extends Controller
         $lipa_na_mpesa_password = base64_encode($BusinessShortCode . $passkey . $timestamp);
         return $lipa_na_mpesa_password;
     }
-    function stkpush($phone, $amount, $serial)
+    function stkpush($total, $contact, $receipt)
     {
         //dd(request());
-        $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
-        $originalStr = $phone;
-        $prefix = substr($originalStr, 0, 1);
-        $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
-        $url = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+        $url = (env('MPESA_ENV') == 'live') ? 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest' : 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Authorization:Bearer ' . $this->generate_token()));
         $curl_post_data = [
-            //Fill in the request parameters with valid values
             'BusinessShortCode' => env('MPESA_SHORT_CODE'),
             'Password' => $this->lipaNaMpesaPassword(),
             'Timestamp' => date('YmdHis'),
             'TransactionType' => 'CustomerPayBillOnline',
-            'Amount' => $amount,
-            'PartyA' => $contact, // replace this with your phone number
+            'Amount' => $total,
+            'PartyA' => $contact,
             'PartyB' => env('MPESA_SHORT_CODE'),
-            'PhoneNumber' => $contact, // replace this with your phone number
-            'CallBackURL' => 'https://jkusda.apekinc.top/api/v1/callback' . $serial,
-            'AccountReference' => 'Receipt ' . $serial,
-            'TransactionDesc' => $serial
+            'PhoneNumber' => $contact,
+            'CallBackURL' => 'https://chalkorganic.apekinc.top/api/v1/callback/' . $receipt,
+            'AccountReference' => 'Receipt ' . $receipt,
+            'TransactionDesc' => $receipt
         ];
         $data_string = json_encode($curl_post_data);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -67,11 +63,10 @@ class OrderController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
         $curl_response = curl_exec($curl);
         $res = json_decode($curl_response);
-        return $res;
+        // return $res;
         if ($res->ResponseCode == 0) {
-            return response()->json('Success', 200);
         } else {
-            return response()->json('Something wrong happened. Try  again.', 400);
+            echo "<script>alert('Something wrong happened. Try  again.');</script>";
         }
     }
     public function Callback($serial)
@@ -106,46 +101,19 @@ class OrderController extends Controller
         $originalStr = $phone;
         $prefix = substr($originalStr, 0, 1);
         $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
-        $url = (env('MPESA_ENV') == 'live') ? 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest' : 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Authorization:Bearer ' . $this->generate_token()));
-        $curl_post_data = [
-            'BusinessShortCode' => env('MPESA_SHORT_CODE'),
-            'Password' => $this->lipaNaMpesaPassword(),
-            'Timestamp' => date('YmdHis'),
-            'TransactionType' => 'CustomerPayBillOnline',
-            'Amount' => $total,
-            'PartyA' => $contact,
-            'PartyB' => env('MPESA_SHORT_CODE'),
-            'PhoneNumber' => $contact,
-            'CallBackURL' => 'https://chalkorganic.apekinc.top/api/v1/callback/' . $receipt,
-            'AccountReference' => 'Receipt ' . $receipt,
-            'TransactionDesc' => $receipt
-        ];
-        $data_string = json_encode($curl_post_data);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
-        $curl_response = curl_exec($curl);
-        $res = json_decode($curl_response);
-        // return $res;
-        if ($res->ResponseCode == 0) {
-            foreach ($carts as $cart) {
-                order::create([
-                    'buyer_id' => $cart->buyer_id,
-                    'product_id' => $cart->product_id,
-                    'quantity' => $cart->quantity,
-                    'pickup' => Auth()->user()->residence,
-                    'more' => request()->more,
-                    'receipt' => $receipt
-                ]);
-                cart::destroy($cart->id);
-            }
-            return redirect('/orders');
-        } else {
-            echo "<script>alert('Something wrong happened. Try  again.');</script>";
+        $this->stkpush($total, $contact, $receipt);
+        foreach ($carts as $cart) {
+            order::create([
+                'buyer_id' => $cart->buyer_id,
+                'product_id' => $cart->product_id,
+                'quantity' => $cart->quantity,
+                'pickup' => Auth()->user()->residence,
+                'more' => request()->more,
+                'receipt' => $receipt
+            ]);
+            cart::destroy($cart->id);
         }
+        return redirect('/orders');
     }
     function updateOrder($id)
     {
@@ -158,11 +126,24 @@ class OrderController extends Controller
     function viewOrder()
     {
         $orders = DB::table('orders')->where('buyer_id', (Auth()->user()->id))->join('products', 'orders.product_id', '=', 'products.id')->select('orders.*', 'products.product_name', 'products.path', 'products.price')->get();
-        $total = 0;
         $data = [
             'orders' => $orders,
         ];
         return view('orders', $data);
+    }
+    function payOrder($id)
+    {
+        $item = Order::find($id);
+        $price = product::where('id', $item->product_id)->first();
+        $total = ($item->qty) * ($price->price);
+        $phone = request()->phone;
+        $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
+        $originalStr = $phone;
+        $prefix = substr($originalStr, 0, 1);
+        $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
+        $receipt = $price->product_name;
+        $this->stkpush($total, $contact, $receipt);
+        return redirect()->back();
     }
     function orders()
     {

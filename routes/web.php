@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function(){
 
     //Orders Routes
     Route::post('/order/makeOrder',[OrderController::class,'makeOrder']);
+    Route::post('/order/payOrder/{id}',[OrderController::class,'payOrder']);
     Route::get('/order/updateOrder/{id}',[OrderController::class,'updateOrder']);
     Route::get('/order/view',[OrderController::class,'viewOrder']);
     Route::get('/orders',[OrderController::class,'orders']);
