@@ -34,24 +34,24 @@
                                 <td>{{$order->product_name}}</td>
                                 <td>{{$order->quantity}}</td>
                                 <td>@if($order->payment=='Pending')
-                                <button class="btn btn-success" data-toggle="modal" data-target="#orderModal">Complete Order</button>
+                                <button class="btn btn-success" data-toggle="modal" data-target="#orderModal">Pay</button>
                         <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModal" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="orderModal">Pay</h5>
+                                        <h5 class="modal-title" id="orderModal">Pay for the Orde {{$order->receipt}}</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="/order/payOrder/{{$order->id}}" enctype="multipart/form-data">
+                                    <form method="post" action="/order/payOrder" enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
                                         <div class="row mb-3">
                                                 <label for="category" class="col-md-4 col-form-label text-md-end">{{ __('Order No.') }}</label>
                                                 <div class="col-md-6">
                                                     {{$order->receipt}}
-                                                    <input type="hidden" name="orderNo" value="{{$order->id}}">
+                                                    <input type="hidden" name="orderNo" value="{{$order->receipt}}">
                                                     @error('county')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-success">Complete Order</button>
+                                            <button type="submit" class="btn btn-success">Complete Payment</button>
                                         </div>
                                     </form>
                                 </div>

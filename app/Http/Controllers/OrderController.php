@@ -89,6 +89,7 @@ class OrderController extends Controller
                 'PhoneNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value'],
                 'response' => 'Success'
             ]);
+            order::where('receipt',$serial)->update(['payment','Paid']);
         }
         else{
             Log::channel('mpesaErrors')->info((json_encode($res['Body']['stkCallback']['ResultDesc'])));
@@ -170,9 +171,13 @@ class OrderController extends Controller
     }
     function payOrder()
     {
-        $order = order::where('id', request()->orderNo)->first();
+        $orders = order::where('receipt', request()->orderNo)->get();
+        $total=0;
+        foreach($orders as $order){
         $item = product::where('id', $order->product_id)->first();
-        $total = ($order->quantity) * ($item->price);
+        $amount = ($order->quantity) * ($item->price);
+        $total+=$amount;
+        }
         // return [$order,$item];
         // return $total;
         $receipt = $order->receipt;
