@@ -77,17 +77,7 @@ class OrderController extends Controller
     public function Callback($serial)
     {
         $response = request();
-        $res = json_decode($response, true);
         Log::channel('mpesa')->info($response);
-        if ($res['Body']['stkCallback']['ResultCode']) {
-            if ($res['Body']['stkCallback']['ResultCode'] == 0) {
-                order::where(['receipt' => $serial])->update(['payment' => 'Paid']);
-            } elseif ($res['Body']['stkCallback']['ResultCode'] == 1037) {
-                Log::channel('mpesaErrors')->info('Payment Failed due to timeout');
-            }
-        } else {
-            Log::channel('mpesaErrors')->info('Unable to get response');
-        }
         Mpesa::create([
             'TransactionType' => 'Paybill',
             'Receipt' => $serial,
@@ -97,8 +87,6 @@ class OrderController extends Controller
             'PhoneNumber' => 'number',
             'response' => $response
         ]);
-
-        // Responding to the confirmation request
         $response = new Response();
         $response->headers->set("Content-Type", "text/xml; charset=utf-8");
         $response->setContent(json_encode(["C2BPaymentConfirmationResult" => "Success"]));
@@ -113,8 +101,6 @@ class OrderController extends Controller
         foreach ($carts  as $cart) {
             $total += ($cart->price) * ($cart->quantity);
         }
-        Log::channel('orders')->info(json_encode(request()));
-        // $this->stkpush($phone,$total,$receipt);
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
         $originalStr = $phone;
         $prefix = substr($originalStr, 0, 1);
