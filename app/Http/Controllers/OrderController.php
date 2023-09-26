@@ -79,7 +79,7 @@ class OrderController extends Controller
     {
         $res = request();
         if($res['Body']['stkCallback']['ResultCode']==0){
-        Log::channel('mpesa')->info($res);
+        Log::channel('mpesa')->info(json_encode(['massage'=>$res['Body']['stkCallback']['ResultDesc'],'Amount'=>$res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],'TransactionId'=>$res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']]));
         Mpesa::create([
                 'TransactionType' => 'Paybill',
                 'Receipt' => $serial,
