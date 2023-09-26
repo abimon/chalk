@@ -37,6 +37,44 @@ class OrderController extends Controller
         $lipa_na_mpesa_password = base64_encode($BusinessShortCode . $passkey . $timestamp);
         return $lipa_na_mpesa_password;
     }
+    function stkpush($phone, $amount, $serial)
+    {
+        //dd(request());
+        $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
+        $originalStr = $phone;
+        $prefix = substr($originalStr, 0, 1);
+        $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
+        $url = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Authorization:Bearer ' . $this->generate_token()));
+        $curl_post_data = [
+            //Fill in the request parameters with valid values
+            'BusinessShortCode' => env('MPESA_SHORT_CODE'),
+            'Password' => $this->lipaNaMpesaPassword(),
+            'Timestamp' => date('YmdHis'),
+            'TransactionType' => 'CustomerPayBillOnline',
+            'Amount' => $amount,
+            'PartyA' => $contact, // replace this with your phone number
+            'PartyB' => env('MPESA_SHORT_CODE'),
+            'PhoneNumber' => $contact, // replace this with your phone number
+            'CallBackURL' => 'https://jkusda.apekinc.top/api/v1/callback' . $serial,
+            'AccountReference' => 'Receipt ' . $serial,
+            'TransactionDesc' => $serial
+        ];
+        $data_string = json_encode($curl_post_data);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
+        $curl_response = curl_exec($curl);
+        $res = json_decode($curl_response);
+        return $res;
+        if ($res->ResponseCode == 0) {
+            return response()->json('Success', 200);
+        } else {
+            return response()->json('Something wrong happened. Try  again.', 400);
+        }
+    }
     public function Callback($serial)
     {
         $res = request();
@@ -92,7 +130,8 @@ class OrderController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
         $curl_response = curl_exec($curl);
         $res = json_decode($curl_response);
-        if($res->ResponseCode==0){
+        // return $res;
+        if ($res->ResponseCode == 0) {
             foreach ($carts as $cart) {
                 order::create([
                     'buyer_id' => $cart->buyer_id,
@@ -105,9 +144,8 @@ class OrderController extends Controller
                 cart::destroy($cart->id);
             }
             return redirect('/orders');
-        }
-        else{
-            return $res;
+        } else {
+            echo "<script>alert('Something wrong happened. Try  again.');</script>";
         }
     }
     function updateOrder($id)
@@ -126,18 +164,15 @@ class OrderController extends Controller
         ];
         return view('orders', $data);
     }
-    function payOrder($id)
-    {
-        // dd(request());
-        $item = Order::find($id);
-        $price = product::where('id', $item->product_id)->first();
-        $total = ($item->qty) * ($price->price);
-        $phone = request()->phone;
+    function payOrder($id){
+        $order=order::find(request()->id);
+        $item=product::where('id',$order->product_id)->first();
+        $total=($order->qty)*($item->price);
+        return $total;
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
-        $originalStr = $phone;
+        $originalStr = request()->phone;
         $prefix = substr($originalStr, 0, 1);
         $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
-        $receipt = $item->receipt;
         $url = (env('MPESA_ENV') == 'live') ? 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest' : 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -161,11 +196,12 @@ class OrderController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
         $curl_response = curl_exec($curl);
         $res = json_decode($curl_response);
-        if($res->ResponseCode==0){
-            return redirect()->back();
-        }
-        else{
-            return $res;
+        // return $res;
+        if ($res->ResponseCode == 0) {
+            
+            return redirect('/orders');
+        } else {
+            echo "<script>alert('Something wrong happened. Try  again.');</script>";
         }
     }
     function orders()
