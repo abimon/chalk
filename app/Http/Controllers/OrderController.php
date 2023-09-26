@@ -77,9 +77,8 @@ class OrderController extends Controller
     public function Callback($serial)
     {
         $response = request();
-        
         $res=json_decode($response,true);
-        Log::channel('mpesa')->info($res);
+        Log::channel('mpesa')->info($res['Body']);
         $path=$res['Body']['stkCallback']['CallbackMetadata']['item'];
         Mpesa::create([
             'TransactionType' => 'Paybill',
