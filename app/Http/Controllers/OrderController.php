@@ -143,8 +143,14 @@ class OrderController extends Controller
         $prefix = substr($originalStr, 0, 1);
         $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
         $receipt = $price->product_name;
-        $this->stkpush($total, $contact, $receipt);
-        return redirect()->back();
+        $curl_response=$this->stkpush($total, $contact, $receipt);
+        $res = json_decode($curl_response);
+        if($res->ResponseCode==0){
+            return redirect()->back();
+        }
+        else{
+            return $res;
+        }
     }
     function orders()
     {
