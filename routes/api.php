@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/v1/callback/{}', [OrderController::class,'Callback']);
+Route::post('/v1/callback/{serial}', function(){
+    $response=request();
+    Log::channel('mpesa')->info($response);
+});

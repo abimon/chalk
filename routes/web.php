@@ -5,6 +5,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\viewsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -34,7 +35,7 @@ Route::get('/logout', function () {
 Route::get('/products', [ProductController::class, 'products']);
 Route::get('/products/{category}', [ProductController::class, 'prodByCategory']);
 Route::post('/search',[ProductController::class,'search']);
-
+Route::get('/log',[viewsController::class,'testLog']);
 Auth::routes();
 Route::middleware('auth')->group(function(){
     //Product routes
@@ -71,5 +72,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/dashboard', function () {
         return view('dashboard');
     });
+
+    
     
 });

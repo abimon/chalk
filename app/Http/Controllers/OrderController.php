@@ -125,7 +125,7 @@ class OrderController extends Controller
             'PartyA' => $contact,
             'PartyB' => env('MPESA_SHORT_CODE'),
             'PhoneNumber' => $contact,
-            'CallBackURL' => 'https://chalkorganic.apekinc.top//api/v1/callback/' . $receipt,
+            'CallBackURL' => 'https://chalkorganic.apekinc.top/api/v1/callback/' . $receipt,
             'AccountReference' => 'Receipt ' . $receipt,
             'TransactionDesc' => $receipt
         ];
