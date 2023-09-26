@@ -157,7 +157,6 @@ class OrderController extends Controller
     {
         order::where('receipt',$id)->update([
             'payment' => 'Paid',
-            // 'delivery' => request()->delivery,
         ]);
         return redirect()->back();
     }
