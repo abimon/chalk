@@ -164,8 +164,8 @@ class OrderController extends Controller
         ];
         return view('orders', $data);
     }
-    function payOrder($id){
-        $order=order::find(request()->id);
+    function payOrder(){
+        $order=order::find(request()->orderNo);
         $item=product::where('id',$order->product_id)->first();
         $total=($order->qty)*($item->price);
         return $total;
