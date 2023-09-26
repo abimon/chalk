@@ -80,15 +80,18 @@ class OrderController extends Controller
         $res = request();
         Log::channel('mpesa')->info($res);
         Log::channel('mpesaErrors')->info((json_decode($res)));
-        Mpesa::create([
-            'TransactionType' => 'Paybill',
-            'Receipt' => '$serial',
-            'TransAmount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
-            'MpesaReceiptNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value'],
-            'TransactionDate' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value'],
-            'PhoneNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value'],
-            'response' => json_encode($res)
-        ]);
+        if($res['Body']['stkCallback']['ResultCode']==0){
+            Mpesa::create([
+                'TransactionType' => 'Paybill',
+                'Receipt' => $serial,
+                'TransAmount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
+                'MpesaReceiptNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value'],
+                'TransactionDate' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value'],
+                'PhoneNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value'],
+                'response' => 'Success'
+            ]);
+            order::where('receipt',$serial)->update(['payment','Paid']);
+        }
         $response = new Response();
         $response->headers->set("Content-Type", "text/xml; charset=utf-8");
         $response->setContent(json_encode(["C2BPaymentConfirmationResult" => "Success"]));
@@ -200,16 +203,11 @@ class OrderController extends Controller
         $curl_response = curl_exec($curl);
         $res = json_decode($curl_response);
         // return $res;
-        $code=$res->ResponseCode;
-        if($code){
-            if ($code == 0) {
-                return redirect('/orders');
-            } else {
-                echo "<script>alert('Something wrong happened. Try  again.');</script>";
-            }
-        }
-        else{
-            echo "<script>alert('".$res->errorMessage."');</script>";
+        $code = $res->ResponseCode;
+        if ($code == 0) {
+            return redirect('/orders');
+        } else {
+            echo "<script>alert('Something wrong happened. Try  again.');</script>";
         }
     }
     function orders()
