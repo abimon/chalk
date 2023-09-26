@@ -168,7 +168,7 @@ class OrderController extends Controller
         $order=order::find(request()->orderNo);
         $item=product::where('id',$order->product_id)->first();
         $total=($order->qty)*($item->price);
-        return $total;
+        return [$order,$item];
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
         $originalStr = request()->phone;
         $prefix = substr($originalStr, 0, 1);
