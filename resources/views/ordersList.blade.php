@@ -33,7 +33,45 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$order->product_name}}</td>
                                 <td>{{$order->quantity}}</td>
-                                <td>{{$order->payment}}</td>
+                                <td>@if($order->payment=='Pending')
+                                <button class="btn btn-success" data-toggle="modal" data-target="#orderModal">Complete Order</button>
+                        <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModal" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="orderModal">Pay</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="post" action="/order/payOrder/{{$order->id}}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="row mb-3">
+                                                <label for="category" class="col-md-4 col-form-label text-md-end">{{ __('M-Pesa Number') }}</label>
+
+                                                <div class="col-md-6">
+                                                    <input type="text" name="phone" value="{{Auth()->user()->contact}}">
+                                                    @error('county')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success">Complete Order</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                                    @else
+                                    <div class="btn-success"><i class="fa fa-check"></i>{{$order->payment}}</div>
+                                    @endif
+                                </td>
                                 <td>{{$order->delivery}}</td>
                                 <td>{{$order->name}}</td>
                                 <td>{{$order->contact}}</td>
