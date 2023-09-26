@@ -7,6 +7,7 @@ use App\Models\Mpesa;
 use App\Models\order;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -75,8 +76,9 @@ class OrderController extends Controller
     }
     public function Callback($serial)
     {
-        $content = file_get_contents('php://input'); //Receives the JSON Result from safaricom
-        $res = json_decode($content, true);
+        $response = request()->body;
+        Log::channel('mpesa')->info($response);
+
         Mpesa::create([
             'TransactionType' => 'Paybill',
             'Receipt' => $serial,
@@ -84,7 +86,7 @@ class OrderController extends Controller
             'TransactionDate' => '$content->TransactionDate',
             'TransAmount' => '$content->TransAmount',
             'PhoneNumber' => '$content->PhoneNumber',
-            'response' => json_encode($res)
+            'response' => json_encode($response)
         ]);
         $acc = order::where(['receipt' => '$serial'])->get();
         foreach ($acc as $ac) {
@@ -150,7 +152,7 @@ class OrderController extends Controller
             }
             return redirect('/orders');
         } else {
-           echo "<script>alert('Something wrong happened. Try  again.');</script>";
+            echo "<script>alert('Something wrong happened. Try  again.');</script>";
         }
     }
     function updateOrder($id)
