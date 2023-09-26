@@ -101,6 +101,11 @@ return [
             'driver' => 'daily',
             'path' => storage_path('logs/mpesaErrors.log'),
             'level' => 'info',
+        ],
+        'orders'=>[
+            'driver' => 'daily',
+            'path' => storage_path('logs/orders.log'),
+            'level' => 'info',
         ]
     ],
 
