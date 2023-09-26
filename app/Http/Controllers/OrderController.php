@@ -77,15 +77,15 @@ class OrderController extends Controller
     public function Callback($serial)
     {
         $response = request();
-        $res=json_decode($response,true);
+        $res = json_decode($response, true);
         Log::channel('mpesa')->info($response);
-        if($res['Body']['stkCallback']['ResultCode']==0){
-            order::where(['receipt' => $serial])->update(['payment'=>'Paid']);
-        }
-        elseif($res['Body']['stkCallback']['ResultCode']==1037){
-            Log::channel('mpesaErrors')->info('Payment Failed due to timeout');
-        }
-        else{
+        if ($res['Body']['stkCallback']['ResultCode']) {
+            if ($res['Body']['stkCallback']['ResultCode'] == 0) {
+                order::where(['receipt' => $serial])->update(['payment' => 'Paid']);
+            } elseif ($res['Body']['stkCallback']['ResultCode'] == 1037) {
+                Log::channel('mpesaErrors')->info('Payment Failed due to timeout');
+            }
+        } else {
             Log::channel('mpesaErrors')->info('Unable to get response');
         }
         Mpesa::create([
@@ -97,7 +97,7 @@ class OrderController extends Controller
             'PhoneNumber' => 'number',
             'response' => $response
         ]);
-        
+
         // Responding to the confirmation request
         $response = new Response();
         $response->headers->set("Content-Type", "text/xml; charset=utf-8");
