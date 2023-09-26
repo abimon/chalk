@@ -197,7 +197,7 @@ class OrderController extends Controller
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
         $curl_response = curl_exec($curl);
         $res = json_decode($curl_response);
-        // return $res;
+        return $res;
         if ($res->ResponseCode == 0) {
             
             return redirect('/orders');
