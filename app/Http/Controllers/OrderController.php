@@ -128,7 +128,7 @@ class OrderController extends Controller
     }
     function payOrder($id)
     {
-        dd(request());
+        // dd(request());
         $item = Order::find($id);
         $price = product::where('id', $item->product_id)->first();
         $total = ($item->qty) * ($price->price);
