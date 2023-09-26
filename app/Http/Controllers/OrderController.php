@@ -79,16 +79,16 @@ class OrderController extends Controller
     {
         $res = request();
         Log::channel('mpesa')->info($res);
-        Log::channel('mpesaErrors')->info((json_decode($res)));
-            Mpesa::create([
-                'TransactionType' => 'Paybill',
-                'Receipt' => '$serial',
-                'TransAmount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
-                'MpesaReceiptNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value'],
-                'TransactionDate' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value'],
-                'PhoneNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value'],
-                'response' => 'Success'
-            ]);
+        Log::channel('mpesaErrors')->info((json_encode($res['Body'])));
+        Mpesa::create([
+            'TransactionType' => 'Paybill',
+            'Receipt' => '$serial',
+            'TransAmount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
+            'MpesaReceiptNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value'],
+            'TransactionDate' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value'],
+            'PhoneNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value'],
+            'response' => 'Success'
+        ]);
         $response = new Response();
         $response->headers->set("Content-Type", "text/xml; charset=utf-8");
         $response->setContent(json_encode(["C2BPaymentConfirmationResult" => "Success"]));
