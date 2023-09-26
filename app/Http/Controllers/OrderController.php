@@ -113,7 +113,7 @@ class OrderController extends Controller
         foreach ($carts  as $cart) {
             $total += ($cart->price) * ($cart->quantity);
         }
-        Log::channel('orders')->info(request());
+        Log::channel('orders')->info(json_encode(request()));
         // $this->stkpush($phone,$total,$receipt);
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
         $originalStr = $phone;
