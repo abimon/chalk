@@ -167,7 +167,7 @@ class OrderController extends Controller
     function payOrder(){
         $order=order::where('id',request()->orderNo)->first();
         $item=product::where('id',$order->product_id)->first();
-        $total=($order->qty)*($item->price);
+        // $total=($order->qty)*($item->price);
         // return [$order,$item];
         $receipt=$order->receipt;
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
@@ -183,7 +183,7 @@ class OrderController extends Controller
             'Password' => $this->lipaNaMpesaPassword(),
             'Timestamp' => date('YmdHis'),
             'TransactionType' => 'CustomerPayBillOnline',
-            'Amount' => $total,
+            'Amount' => ($order->qty)*($item->price),
             'PartyA' => $contact,
             'PartyB' => env('MPESA_SHORT_CODE'),
             'PhoneNumber' => $contact,
