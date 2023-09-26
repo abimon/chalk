@@ -61,9 +61,8 @@ class OrderController extends Controller
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
-        $curl_response = curl_exec($curl);
-        $res = json_decode($curl_response);
-        
+        $res = curl_exec($curl);
+        return $res;
     }
     public function Callback($serial)
     {
@@ -97,19 +96,25 @@ class OrderController extends Controller
         $originalStr = $phone;
         $prefix = substr($originalStr, 0, 1);
         $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
-        $this->stkpush($total, $contact, $receipt);
-        foreach ($carts as $cart) {
-            order::create([
-                'buyer_id' => $cart->buyer_id,
-                'product_id' => $cart->product_id,
-                'quantity' => $cart->quantity,
-                'pickup' => Auth()->user()->residence,
-                'more' => request()->more,
-                'receipt' => $receipt
-            ]);
-            cart::destroy($cart->id);
+        $curl_response=$this->stkpush($total, $contact, $receipt);
+        $res = json_decode($curl_response);
+        if($res->ResponseCode==0){
+            foreach ($carts as $cart) {
+                order::create([
+                    'buyer_id' => $cart->buyer_id,
+                    'product_id' => $cart->product_id,
+                    'quantity' => $cart->quantity,
+                    'pickup' => Auth()->user()->residence,
+                    'more' => request()->more,
+                    'receipt' => $receipt
+                ]);
+                cart::destroy($cart->id);
+            }
+            return redirect('/orders');
         }
-        return redirect('/orders');
+        else{
+            return $res;
+        }
     }
     function updateOrder($id)
     {
