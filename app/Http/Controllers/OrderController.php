@@ -78,7 +78,7 @@ class OrderController extends Controller
     {
         $response = request();
         Log::channel('mpesa')->info($response);
-        $res=json_decode($response->Body);
+        $res=json_decode($response,true);
         $path=$res['Body']['stkCallback']['CallbackMetadata']['item'];
         Mpesa::create([
             'TransactionType' => 'Paybill',
@@ -87,7 +87,7 @@ class OrderController extends Controller
             'TransactionDate' => $path[2]['value'],
             'TransAmount' => $path[0]['value'],
             'PhoneNumber' => $path[3]['value'],
-            'response' => json_encode($response)
+            'response' => $response
         ]);
         $acc = order::where(['receipt' => '$serial'])->get();
         foreach ($acc as $ac) {
