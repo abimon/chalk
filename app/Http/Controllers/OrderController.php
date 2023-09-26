@@ -90,12 +90,7 @@ class OrderController extends Controller
             'PhoneNumber' => 'number',
             'response' => $response
         ]);
-        $acc = order::where(['receipt' => '$serial'])->get();
-        foreach ($acc as $ac) {
-            $ac->confirmed = 1;
-            $ac->update();
-        }
-
+        $acc = order::where(['receipt' => $serial])->update(['payment'=>'Paid']);
         // Responding to the confirmation request
         $response = new Response();
         $response->headers->set("Content-Type", "text/xml; charset=utf-8");
