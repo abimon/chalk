@@ -164,13 +164,14 @@ class OrderController extends Controller
         ];
         return view('orders', $data);
     }
-    function payOrder(){
-        $order=order::where('id',request()->orderNo)->first();
-        $item=product::where('id',$order->product_id)->first();
-        $total=($order->qty)*($item->price);
-        // return [$order,$item];
-return $total;
-        $receipt=$order->receipt;
+    function payOrder()
+    {
+        $order = order::where('id', request()->orderNo)->first();
+        $item = product::where('id', $order->product_id)->first();
+        $total = ($order->qty) * ($item->price);
+        return [$order,$item];
+        // return $total;
+        $receipt = $order->receipt;
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
         $originalStr = request()->phone;
         $prefix = substr($originalStr, 0, 1);
@@ -184,7 +185,7 @@ return $total;
             'Password' => $this->lipaNaMpesaPassword(),
             'Timestamp' => date('YmdHis'),
             'TransactionType' => 'CustomerPayBillOnline',
-            'Amount' => ($order->qty)*($item->price),
+            'Amount' => ($order->qty) * ($item->price),
             'PartyA' => $contact,
             'PartyB' => env('MPESA_SHORT_CODE'),
             'PhoneNumber' => $contact,
@@ -200,7 +201,7 @@ return $total;
         $res = json_decode($curl_response);
         return $res;
         if ($res->ResponseCode == 0) {
-            
+
             return redirect('/orders');
         } else {
             echo "<script>alert('Something wrong happened. Try  again.');</script>";
