@@ -168,8 +168,8 @@ class OrderController extends Controller
     {
         $order = order::where('id', request()->orderNo)->first();
         $item = product::where('id', $order->product_id)->first();
-        $total = ($order->qty) * ($item->price);
-        return [$order,$item];
+        $total = ($order->quantity) * ($item->price);
+        // return [$order,$item];
         // return $total;
         $receipt = $order->receipt;
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
@@ -200,11 +200,15 @@ class OrderController extends Controller
         $curl_response = curl_exec($curl);
         $res = json_decode($curl_response);
         return $res;
-        if ($res->ResponseCode == 0) {
+        if($res->ResponseCode){
+            if ($res->ResponseCode == 0) {
+                return redirect('/orders');
+            } else {
+                echo "<script>alert('Something wrong happened. Try  again.');</script>";
+            }
+        }
+        else{
 
-            return redirect('/orders');
-        } else {
-            echo "<script>alert('Something wrong happened. Try  again.');</script>";
         }
     }
     function orders()
