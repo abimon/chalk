@@ -78,9 +78,9 @@ class OrderController extends Controller
     public function Callback($serial)
     {
         $res = request();
+        if($res['Body']['stkCallback']['ResultCode']==0){
         Log::channel('mpesa')->info($res);
-        Log::channel('mpesaErrors')->info((json_encode($res['Body']['stkCallback']['ResultDesc'])));
-            Mpesa::create([
+        Mpesa::create([
                 'TransactionType' => 'Paybill',
                 'Receipt' => $serial,
                 'TransAmount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
@@ -89,6 +89,10 @@ class OrderController extends Controller
                 'PhoneNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value'],
                 'response' => 'Success'
             ]);
+        }
+        else{
+            Log::channel('mpesaErrors')->info((json_encode($res['Body']['stkCallback']['ResultDesc'])));
+        }
         $response = new Response();
         $response->headers->set("Content-Type", "text/xml; charset=utf-8");
         $response->setContent(json_encode(["C2BPaymentConfirmationResult" => "Success"]));
