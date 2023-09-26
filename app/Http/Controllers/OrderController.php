@@ -76,16 +76,16 @@ class OrderController extends Controller
     }
     public function Callback($serial)
     {
-        $response = request();
-        Log::channel('mpesa')->info($response);
+        $res = request();
+        Log::channel('mpesa')->info($res);
         Mpesa::create([
             'TransactionType' => 'Paybill',
             'Receipt' => $serial,
-            'MpesaReceiptNumber' => "RIQ7RV8AXX",
-            'TransactionDate' => 'date',
-            'TransAmount' => '1',
-            'PhoneNumber' => 'number',
-            'response' => $response
+            'TransAmount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
+            'MpesaReceiptNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value'],
+            'TransactionDate' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value'],
+            'PhoneNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][3]['Value'],
+            'response' => json_encode($res)
         ]);
         $response = new Response();
         $response->headers->set("Content-Type", "text/xml; charset=utf-8");
