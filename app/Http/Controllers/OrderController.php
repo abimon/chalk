@@ -185,7 +185,7 @@ class OrderController extends Controller
             'Password' => $this->lipaNaMpesaPassword(),
             'Timestamp' => date('YmdHis'),
             'TransactionType' => 'CustomerPayBillOnline',
-            'Amount' => ($order->qty) * ($item->price),
+            'Amount' => $total,
             'PartyA' => $contact,
             'PartyB' => env('MPESA_SHORT_CODE'),
             'PhoneNumber' => $contact,
@@ -200,8 +200,9 @@ class OrderController extends Controller
         $curl_response = curl_exec($curl);
         $res = json_decode($curl_response);
         // return $res;
-        if($res->ResponseCode){
-            if ($res->ResponseCode == 0) {
+        $code=$res->ResponseCode;
+        if($code){
+            if ($code == 0) {
                 return redirect('/orders');
             } else {
                 echo "<script>alert('Something wrong happened. Try  again.');</script>";
