@@ -82,7 +82,7 @@ class OrderController extends Controller
         Log::channel('mpesaErrors')->info((json_decode($res)));
             Mpesa::create([
                 'TransactionType' => 'Paybill',
-                'Receipt' => $serial,
+                'Receipt' => '$serial',
                 'TransAmount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
                 'MpesaReceiptNumber' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value'],
                 'TransactionDate' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][2]['Value'],
