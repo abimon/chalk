@@ -208,7 +208,7 @@ class OrderController extends Controller
             }
         }
         else{
-
+            echo "<script>alert('".$res->errorMessage."');</script>";
         }
     }
     function orders()
