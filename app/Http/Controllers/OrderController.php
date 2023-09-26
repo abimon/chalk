@@ -77,16 +77,17 @@ class OrderController extends Controller
     public function Callback($serial)
     {
         $response = request();
-        Log::channel('mpesa')->info($response);
+        
         $res=json_decode($response,true);
+        Log::channel('mpesa')->info($res);
         $path=$res['Body']['stkCallback']['CallbackMetadata']['item'];
         Mpesa::create([
             'TransactionType' => 'Paybill',
             'Receipt' => $serial,
-            'MpesaReceiptNumber' => $path[1]['value'],
-            'TransactionDate' => $path[2]['value'],
-            'TransAmount' => $path[0]['value'],
-            'PhoneNumber' => $path[3]['value'],
+            'MpesaReceiptNumber' => "RIQ7RV8AXX",
+            'TransactionDate' => 'date',
+            'TransAmount' => '1',
+            'PhoneNumber' => 'number',
             'response' => $response
         ]);
         $acc = order::where(['receipt' => '$serial'])->get();
