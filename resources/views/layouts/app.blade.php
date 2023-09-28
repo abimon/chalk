@@ -14,7 +14,7 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Lora:wght@600;700&display=swap" rel="stylesheet">
 
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -29,6 +29,21 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('storage/assets/css/style.css')}}" rel="stylesheet">
+    <style>
+        .total-count {
+            position: absolute;
+            top: 10px;
+            right: 32px;
+            background: #f6931d;
+            width: 18px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            color: #fff;
+            border-radius: 100%;
+            font-size: 11px;
+        }
+    </style>
 </head>
 
 <body>
@@ -36,7 +51,7 @@
     <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status"></div>
     </div>
-     <!--Spinner End -->
+    <!--Spinner End -->
     <!-- Navbar Start -->
     <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
         <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
@@ -79,9 +94,9 @@
                         </div>
                     </div>
                     <a href="/contact" class="nav-item nav-link">Contact Us</a>
-                    
+
                 </div>
-                <div class="d-none d-lg-flex ms-2">  
+                <div class="d-none d-lg-flex ms-2">
                     @guest
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="/login">
                         <small class="fa fa-user text-body"></small>
@@ -92,7 +107,7 @@
                     </a>
                     @endif
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="/cart">
-                        <small class="fa fa-shopping-bag text-body"></small>
+                        <small class="fa fa-shopping-bag text-body"><span class="total-count">0</span></small>
                     </a>
                 </div>
             </div>
@@ -159,6 +174,21 @@
 
 
     <!-- JavaScript Libraries -->
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {},
+            Tawk_LoadStart = new Date();
+        (function() {
+            var s1 = document.createElement("script"),
+                s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/65151a6ce6bed319d003acf5/1hbd6uehc';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('storage/assets/lib/wow/wow.min.js')}}"></script>
