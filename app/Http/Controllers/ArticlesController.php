@@ -36,8 +36,8 @@ class ArticlesController extends Controller
         $l = likes::where('post_id', $item->id)->get();
         $c = comments::where('post_id', $item->id)->get();
         $data = [
-            'item' => $item, 
-            'likes' => $l, 
+            'item' => $item,
+            'likes' => $l,
             'comments' => $c
         ];
         return view('articles.show', $data);
@@ -80,5 +80,15 @@ class ArticlesController extends Controller
             'comment' => request()->comment
         ]);
         return redirect()->back();
+    }
+    public function home()
+    {
+        $item = article::latest()->take(1)->first();
+        $items = article::select('title')->get();
+        $data = [
+            'items' => $items,
+            'item' => $item
+        ];
+        return view('articles.home',$data);
     }
 }

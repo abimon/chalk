@@ -32,6 +32,7 @@ Route::get('/contact', function () {
 Route::get('/lifestyle', function () {
     return view('services');
 });
+Route::get('/articles', [ArticlesController::class, 'home']);
 Route::get('/logout', function () {
     Auth()->logout();
     return redirect('/');

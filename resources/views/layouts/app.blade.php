@@ -29,7 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('storage/assets/css/style.css')}}" rel="stylesheet">
-    
+
 </head>
 
 <body>
@@ -100,8 +100,10 @@
         </nav>
     </div>
     <!-- Navbar End -->
+    <div style="min-height: 500px;">
+        @yield('content')
+    </div>
 
-    @yield('content')
     <!-- Footer Start -->
     <div class="container-fluid bg-dark footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
