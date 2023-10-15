@@ -31,7 +31,6 @@
                                 <th class="border-top-0">Email</th>
                                 <th class="border-top-0">Contact</th>
                                 <th class="border-top-0">Residence</th>
-                                <th class="border-top-0"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,7 +41,6 @@
                                 <td>{{$customer->email}}</td>
                                 <td>{{$customer->contact}}</td>
                                 <td>{{$customer->residence}}</td>
-                                <td><a href="/customer/makeAdmin/{{$customer->id}}">Make Admin</a></td>
                             </tr>
                             @endforeach
                         </tbody>
