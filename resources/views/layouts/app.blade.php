@@ -29,21 +29,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('storage/assets/css/style.css')}}" rel="stylesheet">
-    <style>
-        .total-count {
-            position: absolute;
-            top: 10px;
-            right: 32px;
-            background: #f6931d;
-            width: 18px;
-            height: 18px;
-            line-height: 18px;
-            text-align: center;
-            color: #fff;
-            border-radius: 100%;
-            font-size: 11px;
-        }
-    </style>
+    
 </head>
 
 <body>
@@ -107,7 +93,7 @@
                     </a>
                     @endif
                     <a class="btn-sm-square bg-white rounded-circle ms-3" href="/cart">
-                        <small class="fa fa-shopping-bag text-body"><span class="total-count">0</span></small>
+                        <small class="fa fa-shopping-bag text-body"></small>
                     </a>
                 </div>
             </div>

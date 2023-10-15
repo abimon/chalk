@@ -2,13 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\product;
 
-class ProductController extends Controller
+class ProductsController extends Controller
 {
-    function createProduct()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
-        // dd(request()->category);
+        $products = product::all();
+        $data = [
+            'products' => $products,
+        ];
+        return view('products.index', $data);
+    }
+
+    public function create()
+    {
         $extension = request()->file('file')->getClientOriginalExtension();
         $filename = time() . '.' . $extension;
         request()->file('file')->storeAs('public/images/products', $filename);
@@ -21,34 +35,31 @@ class ProductController extends Controller
         ]);
         return redirect()->back();
     }
-    function deleteProduct($id)
-    {
-        product::destroy($id);
-        return redirect()->back();
-    }
-    function stock()
+    public function store()
     {
         $products = product::all();
         $data = [
             'items' => $products,
         ];
-        return view('stock', $data);
+        return view('products.stock', $data);
     }
-    function products()
-    {
-        $products = product::where('category','!=','Literature')->get();
-        $data = [
-            'products' => $products,
-        ];
-        return view('products', $data);
-    }
-    function prodByCategory($category)
+    public function show($category)
     {
         $products = product::where('category',$category)->get();
         $data = [
             'products' => $products,
         ];
-        return view('products', $data);
+        return view('products.index', $data);
+    }
+
+    public function edit($id)
+    {
+        //
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
     }
     function search(){
         $keyword=request()->search;
@@ -56,6 +67,11 @@ class ProductController extends Controller
         $data = [
             'products' => $products,
         ];
-        return view('products', $data);
+        return view('products.index', $data);
+    }
+    public function destroy($id)
+    {
+        product::destroy($id);
+        return redirect()->back();
     }
 }

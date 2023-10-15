@@ -1,26 +1,11 @@
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="robots" content="noindex,nofollow">
-    <title>Health & Life Center</title>
-    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('storage/assets/images/favicon.png')}}">
-    <!-- Custom CSS -->
+<title>Health & Life Center</title>
+<!-- Custom CSS -->
     <link href="{{asset('storage/plugins/bower_components/chartist/dist/chartist.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('storage/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css')}}">
     <!-- Custom CSS -->
     <link href="{{asset('storage/css/style.min.css')}}" rel="stylesheet">
-</head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<body>
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
@@ -31,22 +16,16 @@
         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
         <header class="topbar" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
-                <div class="navbar-header" data-logobg="skin6">
+                <!-- <div class="navbar-header" data-logobg="skin6">
                     <a class="navbar-brand" href="/">
-                        <!-- Logo icon -->
-                        <!-- <b class="logo-icon">
-                            <p>Health & Life Center</p>
-                        </b> -->
-
-                        <!--End Logo icon -->
-                        <!-- Logo text -->
+                        
                         <span class="logo-text text-dark">
-                            Health & Life Center
+                        <i class="fa fa-home"></i> Home
                         </span>
                     </a>
                     <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
                         href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
-                </div>
+                </div> -->
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <li class=" in">
@@ -73,7 +52,13 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        <!-- User Profile-->
+                    <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/"
+                                aria-expanded="false">
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                                <span class="hide-menu">Home</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item pt-2">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/dashboard"
                                 aria-expanded="false">
@@ -84,7 +69,7 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/orders"
                                 aria-expanded="false">
-                                <i class="fa fa-font" aria-hidden="true"></i>
+                                <i class="fa fa-gifts" aria-hidden="true"></i>
                                 <span class="hide-menu">Orders</span>
                             </a>
                         </li>
@@ -101,6 +86,13 @@
                                 aria-expanded="false">
                                 <i class="fa fa-table" aria-hidden="true"></i>
                                 <span class="hide-menu">Stock</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/article/index"
+                                aria-expanded="false">
+                                <i class="fa fa-list" aria-hidden="true"></i>
+                                <span class="hide-menu">Articles</span>
                             </a>
                         </li>
                         @endif
@@ -140,6 +132,3 @@
     <script src="{{asset('storage/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js')}}"></script>
     <script src="{{asset('storage/js/pages/dashboards/dashboard1.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
-
-</html>

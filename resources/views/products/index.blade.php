@@ -5,13 +5,13 @@
 <div class="container-xxl py-5 mt-5">
     <div class="container">
         <div class="row g-0 gx-5 align-items-end">
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                 <div class="section-header text-start mb-5 wow fadeInUp mt-5" data-wow-delay="0.1s" style="max-width: 500px;">
                     <h1 class="display-5 mb-3">Our Products</h1>
                     <!-- <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p> -->
                 </div>
             </div>
-            <div class="col-lg-6 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
+            <div class="col-lg-8 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
                 <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
                     <li class="nav-item me-2">
                         <a class="btn btn-outline-primary border-2 active"  href="/products">All</a>
@@ -25,8 +25,11 @@
                     <li class="nav-item me-2">
                         <a class="btn btn-outline-primary border-2"  href="/products/Seedling">Seedlings </a>
                     </li>
-                    <li class="nav-item me-0">
+                    <li class="nav-item me-2">
                         <a class="btn btn-outline-primary border-2"  href="/products/Cereals">Cereals</a>
+                    </li>
+                    <li class="nav-item me-0">
+                        <a class="btn btn-outline-primary border-2"  href="/products/Literature">Literature</a>
                     </li>
                 </ul>
             </div>

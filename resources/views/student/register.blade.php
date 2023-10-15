@@ -1,28 +1,13 @@
 @extends('layouts.app')
-
 @section('content')
-<!-- Page Header Start -->
-<div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s">
-    <div class="container">
-        <h1 class="display-3 mb-3 animated slideInDown">Register</h1>
-        <nav aria-label="breadcrumb animated slideInDown">
-            <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a class="text-body" href="/">Home</a></li>
-                <li class="breadcrumb-item text-dark active" aria-current="page">Register</li>
-            </ol>
-        </nav>
-    </div>
-</div>
-<!-- Page Header End -->
-
-<div class="container-xxl py-6">
+<div class="container-xxl py-6" style="margin-top: 50px;">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Student Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="/student/create">
                         @csrf
 
                         <div class="row mb-3">
@@ -38,7 +23,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
 
@@ -59,6 +43,41 @@
                                 <input id="contact" type="number" class="form-control @error('contact') is-invalid @enderror" name="contact" value="{{ old('contact') }}" required autocomplete="contact" maxlength="13" minlength="9">
 
                                 @error('contact')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="ages" class="col-md-4 col-form-label text-md-end">{{ __('Gender') }}</label>
+
+                            <div class="col-md-6">
+                                <select name="gender" id="" class="form-control" required>
+                                    <option value="" selected disabled>Select your Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+
+                                @error('gender')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <?php $ages = ['0–2', '3–5', '6–13', '14–18', '19–33', '34–48', '49–64', '65–78', '78+']; ?>
+                        <div class="row mb-3">
+                            <label for="ages" class="col-md-4 col-form-label text-md-end">{{ __('Age Group') }}</label>
+                            <div class="col-md-6">
+                                <select name="agegroup" id="" class="form-control" required>
+                                    <option value="" selected disabled>Select your age group</option>
+                                    @foreach($ages as $age)
+                                    <option value="{{$age}}">{{$age}}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('agegroup')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -100,28 +119,24 @@
                                 @enderror
                             </div>
                         </div>
+                        <?php $cohorts = ['Jan-April', 'May-August', 'September-December']; ?>
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
+                            <label for="cohort" class="col-md-4 col-form-label text-md-end">{{ __('Cohort') }}</label>
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <select name="cohort" id="" class="form-control" required>
+                                    <option value="" selected disabled>Select your cohort</option>
+                                    @foreach($cohorts as $cohort)
+                                    <option value="{{$cohort}}">{{$cohort}}</option>
+                                    @endforeach
+                                </select>
 
-                                @error('password')
+                                @error('cohort')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
                             </div>
                         </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
@@ -130,7 +145,6 @@
                             </div>
                         </div>
                     </form>
-                    <p class="text-center">Already have an account? <a href="/login">Login</a></p>
                 </div>
             </div>
         </div>
