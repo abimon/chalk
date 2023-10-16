@@ -64,8 +64,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="/" class="nav-item nav-link">Home</a>
-                    <a href="/products" class="nav-item nav-link">Farm Products</a>
-                    <a href="/products/Literature" class="nav-item nav-link">Literature</a>
+                    <a href="/products" class="nav-item nav-link">Products</a>
                     <a href="/lifestyle" class="nav-item nav-link">Lifestyle Support Center</a>
                     <a href="/articles" class="nav-item nav-link">Articles</a>
                     <div class="nav-item dropdown">
@@ -81,20 +80,28 @@
                     </div>
                     <a href="/contact" class="nav-item nav-link">Contact Us</a>
 
-                </div>
-                <div class="d-none d-lg-flex ms-2">
+
                     @guest
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="/login">
-                        <small class="fa fa-user text-body"></small>
-                    </a>
+                    <div class='nav-item nav-link'>
+                        <a class="btn-sm-square bg-white rounded-circle " href="/login">
+                            <small class="fa fa-user text-body"></small>
+                        </a>
+                    </div>
+
                     @else
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="/dashboard">
-                        <small class="fa fa-user text-body"></small>
-                    </a>
+                    <div class='nav-item nav-link'>
+                        <a class="btn-sm-square bg-white rounded-circle" href="/dashboard">
+                            <small class="fa fa-user text-body"></small>
+                        </a>
+                    </div>
+
                     @endif
-                    <a class="btn-sm-square bg-white rounded-circle ms-3" href="/cart">
-                        <small class="fa fa-shopping-bag text-body"></small>
-                    </a>
+                    <div class='nav-item nav-link'>
+                        <a class="btn-sm-square bg-white rounded-circle" href="/cart">
+                            <small class="fa fa-shopping-bag text-body"></small>
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </nav>
@@ -132,14 +139,14 @@
                     <a class="btn btn-link" href="">Terms & Condition</a>
                     <a class="btn btn-link" href="">Support</a>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <!-- <div class="col-lg-3 col-md-6">
                     <h4 class="text-light mb-4">Newsletter</h4>
                     <p>Subscribe to our periodical magazines, articles and notifications on trainings and new products here.</p>
                     <div class="position-relative mx-auto" style="max-width: 400px;">
                         <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
                         <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="container-fluid copyright">
