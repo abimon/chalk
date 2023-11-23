@@ -27,9 +27,9 @@
                     <h5 class="text-white">Call Us</h5>
                     <p class="mb-5"><i class="fa fa-phone-alt me-3"></i>+254 722 987 365</p>
                     <h5 class="text-white">Email Us</h5>
-                    <p class="mb-5"><i class="fa fa-envelope me-3"></i>info@chalkorganic.com</p>
+                    <p class="mb-5"><i class="fa fa-envelope me-3"></i>info@healthandlifecenter.com</p>
                     <h5 class="text-white">Office Address</h5>
-                    <p class="mb-5"><i class="fa fa-map-marker-alt me-3"></i>Beackon Plaza, Gate B, Juja</p>
+                    <p class="mb-5"><i class="fa fa-map-marker-alt me-3"></i>Chalk Home Complex; Off Namba-Ndiru Road; Homa-Bay County</p>
                     <h5 class="text-white">Follow Us</h5>
                     <div class="d-flex pt-2">
                         <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
@@ -40,7 +40,7 @@
                 </div>
             </div>
             <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s">
-                <p class="mb-4">Any information share through this form is kept private as per our user policy. It will only be used to respond to you appropriately.</p>
+                <p class="mb-4">Any information shared through this form is kept private as per our user policy. It will only be used to respond to you appropriately.</p>
                 <form>
                     <div class="row g-3">
                         <div class="col-md-6">

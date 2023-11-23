@@ -43,7 +43,7 @@
         <div class="top-bar row gx-0 align-items-center d-none d-lg-flex">
             <div class="col-lg-8 px-2 text-start">
                 <small><i class="fa fa-map-marker-alt me-2"></i>Chalk Home Complex; Off Namba-Ndiru Road; Homa-Bay County</small>
-                <small class="ms-4"><i class="fa fa-envelope me-2"></i>info@chalkorganic.com</small>
+                <small class="ms-4"><i class="fa fa-envelope me-2"></i>info@healthandlifecenter.com</small>
             </div>
             <div class="col-lg-4 px-2 text-end">
                 <small>Follow us:</small>
