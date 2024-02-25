@@ -15,10 +15,13 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('author');
             $table->string('title');
             $table->string('category');
             $table->longText('body');
             $table->timestamps();
+
+            $table->foreign('author')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

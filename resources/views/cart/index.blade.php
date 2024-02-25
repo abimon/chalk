@@ -25,16 +25,20 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php $total=0;?>
                             @foreach($carts as $key=>$cart)
+                            <?php 
+                            $total+=($cart->quantity)*($cart->product->price)
+                            ?>
                             <tr>
                                 <td>{{$key+1}}</td>
                                 <td>
-                                    <img src="{{asset('storage/images/products/'.$cart->path)}}" width='100'>
-                                    <p>{{$cart->product_name}}</p>
+                                    <img src="{{asset('storage/images/products/'.$cart->product->path)}}" width='100'>
+                                    <p>{{$cart->product->product_name}}</p>
                                 </td>
                                 <td>{{$cart->quantity}}</td>
-                                <td>{{$cart->price}}</td>
-                                <td>{{($cart->quantity)*($cart->price)}}</td>
+                                <td>{{$cart->product->price}}</td>
+                                <td>{{($cart->quantity)*($cart->product->price)}}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -53,7 +57,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <form method="post" action="/order/makeOrder" enctype="multipart/form-data">
+                                    <form method="post" action="{{route('order.store')}}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row mb-3">
@@ -62,6 +66,19 @@
                                                 <div class="col-md-6">
                                                     <input type="text" name="phone" value="{{Auth()->user()->contact}}">
                                                     @error('county')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label for="category" class="col-md-4 col-form-label text-md-end">{{ __('Total Amount') }}</label>
+
+                                                <div class="col-md-6">
+                                                    <input type="number" value="{{$total}}" disabled>
+                                                    <input type="hidden" name="amount" value="{{$total}}">
+                                                    @error('amount')
                                                     <span class="invalid-feedback" role="alert">
                                                         <strong>{{ $message }}</strong>
                                                     </span>

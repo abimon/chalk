@@ -2,45 +2,40 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\article;
+use App\Models\cart;
 use Illuminate\Http\Request;
 
-class ArticlesController extends Controller
+class CartsController extends Controller
 {
-    
     public function index()
     {
-        if(Auth()->user()->role=='Admin'){
-            $articles = article::all();
-        }
-        else{
-            $articles = article::where('author',Auth()->user()->id)->get();
-        }
-        return view('articles.index',compact('articles'))->with('users');
+        $carts = cart::where('buyer_id',Auth()->user()->id)->get();
+        return view('cart.index',compact('carts'))->with('product');
     }
 
     public function create()
     {
-        return view('article.create');
+        $cart = Cart::where([['product_id',request()->id],['buyer_id',Auth()->user()->id]])->first();
+        if(!$cart){
+            cart::create([
+                'product_id' => request()->id,
+                'buyer_id' => Auth()->user()->id,
+                'quantity' => 1
+            ]);
+        }
+        else{
+            $cart->quantity+=1;
+            $cart->update();
+        }
+        return redirect()->back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        
+        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //

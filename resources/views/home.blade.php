@@ -12,8 +12,8 @@
                         <div class="row justify-content-start">
                             <div class="col-lg-7">
                                 <h1 class="display-2 mb-5 animated slideInDown">Organic Food Is Good For Health</h1>
-                                <a href="" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Products</a>
-                                <a href="" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Services</a>
+                                <a href="/products" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Products</a>
+                                <a href="/services" class="btn btn-secondary rounded-pill py-sm-3 px-sm-5 ms-3">Services</a>
                             </div>
                         </div>
                     </div>
@@ -111,15 +111,15 @@
                 <h1 class="display-5 text-white mb-3">Visit Our Firm</h1>
                 <p class="text-white mb-0">We're a home. Come and visit us. We've adapted ourselves to provide your organic farming needs, your health food requirements and naturopathy. We also offer a variety of other useful products and services that might interest you. Be our guest.</p>
             </div>
-            <div class="col-md-5 text-md-end wow fadeIn" data-wow-delay="0.5s">
+            <!--<div class="col-md-5 text-md-end wow fadeIn" data-wow-delay="0.5s">
                 <a class="btn btn-lg btn-secondary rounded-pill py-3 px-5" href="">Visit Now</a>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>
 <!-- Firm Visit End -->
 
-<!-- Testimonial Start -->
+<!-- Testimonial Start 
 <div class="container-fluid bg-light bg-icon py-6 mb-5">
     <div class="container">
         <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
@@ -174,9 +174,9 @@
         </div>
     </div>
 </div>
-<!-- Testimonial End -->
+Testimonial End -->
 
-<!-- Blog Start -->
+<!-- Blog Start
 <div class="container-xxl py-5">
     <div class="container">
         <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
@@ -217,5 +217,5 @@
         </div>
     </div>
 </div>
-<!-- Blog End -->
+Blog End -->
 @endsection

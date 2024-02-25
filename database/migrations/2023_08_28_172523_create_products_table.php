@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('product_name')->unique();
             $table->string('path');
+            $table->string('file_path')->nullable();
             $table->integer('price');
             $table->string('category');
             $table->longText('details');

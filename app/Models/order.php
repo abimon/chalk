@@ -18,4 +18,11 @@ class order extends Model
         'delivery',
         'receipt'
     ];
+    public function buyer(){
+        return $this->belongsTo(User::class, 'buyer_id','id');
+    }
+    public function product(){
+        return $this->belongsTo(product::class, 'product_id','id');
+    }
+    
 }

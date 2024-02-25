@@ -1,36 +1,47 @@
 @extends('layouts.dash')
 @section('content')
-<div>
-    <form method="post" action="/article/update/{{$item->id}}" enctype="multipart/form-data">
-        @csrf
-        <div class="modal-body">
-            <div class="row mb-2">
-                <div class="col-md-6">
-                    <div class="form-floating">
-                        <input type="text" name="title" id="" class="form-control" value="{{$item->title}}">
-                        <label for="">Title</label>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-floating">
-                        <select name='category' class='form-control'>
-                            <option value="{{$item->category}}">{{$item->category}}</option>
-                            <option value="Organic Farming" class='form-control'>Organic Farming</option>
-                            <option value="Inspirational" class='form-control'>Inspirational</option>
-                            <option value="Naturopathy" class='form-control'>Naturopathy</option>
-                            <option value="Other" class='form-control'>Other</option>
-                        </select>
-                        <label for="">Category</label>
-                    </div>
-                </div>
+<div class="container-xxl py-5 mt-5">
+    <div class="container">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Article</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <textarea name="body" id="editor" class="form-control" rows="15">{{$item->body}}</textarea>
+            <form method="post" action="/article/store" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" name="title" id="" class="form-control" placeholder=" ">
+                                <label for="">Title</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select name='category' class='form-control'>
+                                    <option value="Organic Farming" class='form-control'>Organic Farming</option>
+                                    <option value="Inspirational" class='form-control'>Inspirational</option>
+                                    <option value="Naturopathy" class='form-control'>Naturopathy</option>
+                                    <option value="Other" class='form-control'>Other</option>
+                                </select>
+                                <label for="">Category</label>
+                            </div>
+                        </div>
+                    </div>
+                    <textarea name="body" id="editor" class="form-control" rows="15" placeholder="Your article goes here..."></textarea>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Update</button>
-        </div>
-    </form>
+    </div>
+
 </div>
 <script src="https://cdn.ckeditor.com/ckeditor5/36.0.0/super-build/ckeditor.js"></script>
 <script>

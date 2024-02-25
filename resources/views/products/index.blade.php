@@ -1,69 +1,177 @@
-@extends('layouts.app')
+@extends('layouts.dash')
 @section('content')
-
-<!-- Product Start -->
-<div class="container-xxl py-5 mt-5">
-    <div class="container">
-        <div class="row g-0 gx-5 align-items-end">
-            <div class="col-lg-4">
-                <div class="section-header text-start mb-5 wow fadeInUp mt-5" data-wow-delay="0.1s" style="max-width: 500px;">
-                    <h1 class="display-5 mb-3">Our Products</h1>
-                    <!-- <p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p> -->
-                </div>
-            </div>
-            <div class="col-lg-8 text-start text-lg-end wow slideInRight" data-wow-delay="0.1s">
-                <ul class="nav nav-pills d-inline-flex justify-content-end mb-5">
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2 active"  href="/products">All</a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2"  href="/products/Vegetables">Vegetables </a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2"  href="/products/Fruits">Fruits </a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2"  href="/products/Seedling">Seedlings </a>
-                    </li>
-                    <li class="nav-item me-2">
-                        <a class="btn btn-outline-primary border-2"  href="/products/Cereals">Cereals</a>
-                    </li>
-                    <li class="nav-item me-0">
-                        <a class="btn btn-outline-primary border-2"  href="/products/Literature">Literature</a>
-                    </li>
-                </ul>
-            </div>
+<div class="page-breadcrumb bg-white">
+    <div class="row align-items-center">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Stock</h4>
         </div>
-        <div class="tab-content">
-            <div id="tab-1" class="tab-pane fade show p-0 active">
-                <div class="row g-4">
-                    @foreach($products as $key=>$product)
-                    <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="{{(($key+1)%4)==1?'0.1s':((($key+1)%3)==1?'0.3s':((($key+1)%2)==0?'0.5s':'0.7s'))}}">
-                        <div class="product-item">
-                            <div class="position-relative bg-light overflow-hidden">
-                                <img class="img-fluid w-100" src="{{asset('storage/images/products/'.$product['path'])}}" alt="">
-                                <div class="bg-secondary rounded text-white position-absolute start-0 top-0 m-4 py-1 px-3">New</div>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <div class="d-md-flex">
+                <ol class="breadcrumb ms-auto">
+                    <li><a href="#" class="fw-normal"></a></li>
+                </ol>
+                <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-success  d-none d-md-block pull-right ms-3 hidden-xs hidden-sm waves-effect waves-light text-white">Add Product</button>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <div class="text-center p-4">
-                                <a class="d-block h5 mb-2" href="">{{$product->product_name}}</a>
-                                <span class="text-primary me-1">KShs {{$product->price}}.00</span>
-                                <span class="text-body text-decoration-line-through">KShs {{($product->price)+20}}.00</span>
-                            </div>
-                            <div class="d-flex border-top">
-                                <small class="w-50 text-center border-end py-2">
-                                    <a class="text-body" href=""><i class="fa fa-eye text-primary me-2"></i>View detail</a>
-                                </small>
-                                <small class="w-50 text-center py-2">
-                                    <a class="text-body" href="/cart/addtocart/{{$product->id}}"><i class="fa fa-shopping-bag text-primary me-2"></i>Add to cart</a>
-                                </small>
-                            </div>
+                            <form method="post" action="{{route('product.store')}}" enctype="multipart/form-data">
+                                @csrf
+                                <div class="modal-body">
+
+                                    <div class="row mb-3">
+                                        <label for="productImage" class="col-md-4 col-form-label">Product Image</label>
+                                        <div class="col-md-6">
+                                            <img id="output" src="{{asset('storage/profile/'.Auth()->User()->avatar)}}" style="width:100px;" />
+                                            <input type="file" accept="image/jpeg, image/png" name="file" id="file" style="display: none;" class="form-control" onchange="loadFile(event)">
+
+                                            <script>
+                                                var loadFile = function(event) {
+                                                    var image = document.getElementById('output');
+                                                    image.src = URL.createObjectURL(event.target.files[0]);
+                                                    document.getElementById('output').value == image.src;
+                                                };
+                                            </script>
+                                            <div class="pt-2">
+                                                <a href="#" class="btn btn-primary btn-sm " title="Upload new profile image"><label for="file" class="text-white"><i class="bi bi-upload"></i> Product Image</label></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Product Name') }}</label>
+                                        <div class="col-md-6">
+                                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name">
+
+                                            @error('name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="price" class="col-md-4 col-form-label text-md-end">{{ __('Product Price') }}</label>
+                                        <div class="col-md-6">
+                                            <input id="price" type="number" class="form-control @error('price') is-invalid @enderror" name="price" value="{{ old('price') }}" required autocomplete="price">
+
+                                            @error('price')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Product description') }}</label>
+                                        <div class="col-md-6">
+                                            <textarea id="desc" type="number" class="form-control @error('desc') is-invalid @enderror" name="desc" required autocomplete="desc">{{ old('desc') }}</textarea>
+
+                                            @error('desc')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="category" class="col-md-4 col-form-label text-md-end">{{ __('Category') }}</label>
+
+                                        <div class="col-md-6">
+                                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                                <div class="row">
+                                                    <div class="form-check col-6">
+                                                        <input class="form-check-input" type="radio" value="Ebook" name="cat" id="flexRadioDefault1" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                            Ebook
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check col-6">
+                                                        <input class="form-check-input" type="radio" name="cat" id="flexRadioDefault2" value="others" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                        <label class="form-check-label" for="flexRadioDefault2">
+                                                            Others
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <input type="file" name="ebook" id="" accept=".pdf" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                                        <div class="accordion-body">
+                                                            <select class="form-select" name="category" aria-label="Default select example">
+                                                                <option class="form-control" selected disabled>Select Category</option>
+                                                                <?php $cats = ['Fruits', 'Vegetables', 'Cereals', 'Seedling', 'Literature',  'Others']; ?>
+                                                                @foreach($cats as $cat)
+                                                                <option class="form-control" value="{{$cat}}">{{$cat}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @error('category')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save Product</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    @endforeach
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Product End -->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="white-box">
+                <h3 class="box-title">Stock Inventory</h3>
+                <div class="table-responsive">
+                    <table class="table text-nowrap">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0">#</th>
+                                <th class="border-top-0">Picture</th>
+                                <th class="border-top-0">Product Name</th>
+                                <th class="border-top-0">Category</th>
+                                <th class="border-top-0">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($products as $key=>$product)
+                            <tr>
+                                <td>{{$key+1}}</td>
+                                <td>
+                                    <img src="{{asset('storage/images/products/'.$product['path'])}}" width='60'>
+                                </td>
+                                <td>{{$product->product_name}}</td>
+                                <td>{{$product->category}}</td>
+                                <td>{{$product->price}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

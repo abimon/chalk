@@ -3,13 +3,21 @@
 
 <head>
     <meta charset="utf-8">
-    <title>CHALK Organic</title>
+     @isset($title)
+    <title>Health & Life Centre - {{$title}}</title>
+    @else
+    <title>Health & Life Centre </title>
+    @endisset
+    
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
+    <meta content="health, life, sanatorium, online, ecommerce, healthandlife, center, books, organic, plants, school, lifestyle," name="keywords">
+    @isset($descr)
+    <meta content={{$descr}} name="description">
+    @else
+    <meta content="Health and Life Center is an organization that aims at meeting one's spiritual, financial, social, physical and intellectual needs in one way or another. Through various avenues such as literature, written articles, organic products, various online courses and sanatorium services, we try to meet this vision." name="description">
+    @endisset
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+    <link href="{{asset('storage/assets/img/logo.png')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,7 +63,7 @@
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-light py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
+            <a href="/" class="navbar-brand ms-4 ms-lg-0">
                 <h1 class="fw-bold text-primary m-0">Health & Life <span class="text-secondary">Center</span></h1>
             </a>
             <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -65,7 +73,7 @@
                 <div class="navbar-nav ms-auto p-4 p-lg-0">
                     <a href="/" class="nav-item nav-link">Home</a>
                     <a href="/products" class="nav-item nav-link">Products</a>
-                    <a href="/lifestyle" class="nav-item nav-link">Lifestyle Support Center</a>
+                    <a href="/services" class="nav-item nav-link">Services</a>
                     <a href="/articles" class="nav-item nav-link">Articles</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link" data-bs-toggle="dropdown">
@@ -98,7 +106,16 @@
                     @endif
                     <div class='nav-item nav-link'>
                         <a class="btn-sm-square bg-white rounded-circle" href="/cart">
-                            <small class="fa fa-shopping-bag text-body"></small>
+                            
+                            <div class="bg-secondary rounded text-white position-absolute end-0 top-0 m-4 py-1 px-3 pz-1"><small class="fa fa-shopping-bag text-body"></small> 
+                            @guest
+                            @else
+                            <?php 
+                            $carts = App\Models\cart::where('buyer_id',auth()->user()->id)
+                            ?>
+                            {{$carts->count()}}
+                            @endguest
+                        </div>
                         </a>
                     </div>
 
@@ -115,7 +132,7 @@
     <div class="container-fluid bg-dark footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <h1 class="fw-bold text-primary mb-4">Health & Life <span class="text-secondary">Center</span></h1>
                     <p>We're a home. Come and visit us. We've adapted ourselves to provide your organic farming needs, your health food requirements and naturopathy. We also offer a variety of other useful products and services that might interest you. Be our guest.</p>
                     <div class="d-flex pt-2">
@@ -125,13 +142,13 @@
                         <a class="btn btn-square btn-outline-light rounded-circle me-0" href=""><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <h4 class="text-light mb-4">Address</h4>
                     <p><i class="fa fa-map-marker-alt me-3"></i>Chalk Home Complex; Off Namba-Ndiru Road; Homa-Bay County</p>
                     <p><i class="fa fa-phone-alt me-3"></i>+254 722 987 365</p>
                     <p><i class="fa fa-envelope me-3"></i>info@healthandlifecenter.com</p>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-4 col-md-6">
                     <h4 class="text-light mb-4">Quick Links</h4>
                     <a class="btn btn-link" href="">About Us</a>
                     <a class="btn btn-link" href="">Contact Us</a>
@@ -170,19 +187,19 @@
 
     <!-- JavaScript Libraries -->
     <!--Start of Tawk.to Script-->
-    <script type="text/javascript">
-        var Tawk_API = Tawk_API || {},
-            Tawk_LoadStart = new Date();
-        (function() {
-            var s1 = document.createElement("script"),
-                s0 = document.getElementsByTagName("script")[0];
-            s1.async = true;
-            s1.src = 'https://embed.tawk.to/65151a6ce6bed319d003acf5/1hbd6uehc';
-            s1.charset = 'UTF-8';
-            s1.setAttribute('crossorigin', '*');
-            s0.parentNode.insertBefore(s1, s0);
-        })();
-    </script>
+    // <script type="text/javascript">
+    //     var Tawk_API = Tawk_API || {},
+    //         Tawk_LoadStart = new Date();
+    //     (function() {
+    //         var s1 = document.createElement("script"),
+    //             s0 = document.getElementsByTagName("script")[0];
+    //         s1.async = true;
+    //         s1.src = 'https://embed.tawk.to/65151a6ce6bed319d003acf5/1hbd6uehc';
+    //         s1.charset = 'UTF-8';
+    //         s1.setAttribute('crossorigin', '*');
+    //         s0.parentNode.insertBefore(s1, s0);
+    //     })();
+    // </script>
     <!--End of Tawk.to Script-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

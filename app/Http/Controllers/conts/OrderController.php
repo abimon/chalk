@@ -37,50 +37,12 @@ class OrderController extends Controller
         $lipa_na_mpesa_password = base64_encode($BusinessShortCode . $passkey . $timestamp);
         return $lipa_na_mpesa_password;
     }
-    function stkpush($phone, $amount, $serial)
-    {
-        //dd(request());
-        $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
-        $originalStr = $phone;
-        $prefix = substr($originalStr, 0, 1);
-        $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
-        $url = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Authorization:Bearer ' . $this->generate_token()));
-        $curl_post_data = [
-            //Fill in the request parameters with valid values
-            'BusinessShortCode' => env('MPESA_SHORT_CODE'),
-            'Password' => $this->lipaNaMpesaPassword(),
-            'Timestamp' => date('YmdHis'),
-            'TransactionType' => 'CustomerPayBillOnline',
-            'Amount' => $amount,
-            'PartyA' => $contact, // replace this with your phone number
-            'PartyB' => env('MPESA_SHORT_CODE'),
-            'PhoneNumber' => $contact, // replace this with your phone number
-            'CallBackURL' => 'https://jkusda.apekinc.top/api/v1/callback' . $serial,
-            'AccountReference' => 'Receipt ' . $serial,
-            'TransactionDesc' => $serial
-        ];
-        $data_string = json_encode($curl_post_data);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
-        $curl_response = curl_exec($curl);
-        $res = json_decode($curl_response);
-        return $res;
-        if ($res->ResponseCode == 0) {
-            return response()->json('Success', 200);
-        } else {
-            return response()->json('Something wrong happened. Try  again.', 400);
-        }
-    }
     public function Callback($serial)
     {
         $res = request();
-        if($res['Body']['stkCallback']['ResultCode']==0){
-        Log::channel('mpesa')->info(json_encode(['massage'=>$res['Body']['stkCallback']['ResultDesc'],'Amount'=>$res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],'TransactionId'=>$res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']]));
-        Mpesa::create([
+        if ($res['Body']['stkCallback']['ResultCode'] == 0) {
+            Log::channel('mpesa')->info(json_encode(['massage' => $res['Body']['stkCallback']['ResultDesc'], 'Amount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'], 'TransactionId' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][1]['Value']]));
+            Mpesa::create([
                 'TransactionType' => 'Paybill',
                 'Receipt' => $serial,
                 'TransAmount' => $res['Body']['stkCallback']['CallbackMetadata']['Item'][0]['Value'],
@@ -90,8 +52,7 @@ class OrderController extends Controller
                 'response' => 'Success'
             ]);
             $this->updateOrder($serial);
-        }
-        else{
+        } else {
             Log::channel('mpesaErrors')->info((json_encode($res['Body']['stkCallback']['ResultDesc'])));
         }
         $response = new Response();
@@ -125,7 +86,7 @@ class OrderController extends Controller
             'PartyA' => $contact,
             'PartyB' => env('MPESA_SHORT_CODE'),
             'PhoneNumber' => $contact,
-            'CallBackURL' => 'https://chalkorganic.apekinc.top/api/v1/callback/' . $receipt,
+            'CallBackURL' => 'https://healthandlifecentre.com/api/v1/callback/' . $receipt,
             'AccountReference' => 'Receipt ' . $receipt,
             'TransactionDesc' => $receipt
         ];
@@ -155,7 +116,7 @@ class OrderController extends Controller
     }
     function updateOrder($id)
     {
-        order::where('receipt',$id)->update([
+        order::where('receipt', $id)->update([
             'payment' => 'Paid',
         ]);
         return redirect()->back();
@@ -171,11 +132,11 @@ class OrderController extends Controller
     function payOrder()
     {
         $orders = order::where('receipt', request()->orderNo)->get();
-        $total=0;
-        foreach($orders as $order){
-        $item = product::where('id', $order->product_id)->first();
-        $amount = ($order->quantity) * ($item->price);
-        $total+=$amount;
+        $total = 0;
+        foreach ($orders as $order) {
+            $item = product::where('id', $order->product_id)->first();
+            $amount = ($order->quantity) * ($item->price);
+            $total += $amount;
         }
         // return [$order,$item];
         // return $total;

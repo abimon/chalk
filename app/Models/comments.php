@@ -13,4 +13,11 @@ class comments extends Model
         'post_id',
         'comment'
     ];
+    public function article(){
+        return $this->belongsTo(article::class, 'id', 'post_id');
+    }
+    public function user(){
+        return $this->belongsTo(User::class, 'id', 'user_id');
+    }
+    
 }
