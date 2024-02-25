@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid bg-light bg-icon my-5 py-6">
     <div class="container">
-        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="">
+        <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
             <h2 class="display-5 mb-3">Our Lifestyle and Activity Center</h2>
 
         </div>
