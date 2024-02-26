@@ -81,7 +81,12 @@
                             <span class="hide-menu">Articles</span>
                         </a>
                     </li>
-
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/transport/index" aria-expanded="false">
+                            <i class="fa fa-calendar" aria-hidden="true"></i>
+                            <span class="hide-menu">Bookings</span>
+                        </a>
+                    </li>
                     <li class="sidebar-item">
                         <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/profile" aria-expanded="false">
                             <i class="fa fa-user" aria-hidden="true"></i>

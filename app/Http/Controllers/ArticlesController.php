@@ -3,78 +3,65 @@
 namespace App\Http\Controllers;
 
 use App\Models\article;
+use App\Models\viewer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ArticlesController extends Controller
 {
-    
+
     public function index()
     {
-        if(Auth()->user()->role=='Admin'){
+        if (Auth()->user()->role == 'Admin') {
             $articles = article::all();
+        } else {
+            $articles = article::where('author', Auth()->user()->id)->get();
         }
-        else{
-            $articles = article::where('author',Auth()->user()->id)->get();
-        }
-        return view('articles.index',compact('articles'))->with('users');
+        return view('articles.index', compact('articles'))->with('users');
     }
 
     public function create()
     {
-        return view('article.create');
+        return view('articles.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+        article::create([
+            'title' => request()->title,
+            'category' => request()->category,
+            'body' => request()->body,
+            'slug' => Str::slug(request()->title, '_'),
+            'author' => Auth()->user()->id
+        ]);
+        return redirect('/article/index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $item = article::findOrFail($id);
+        return view('articles.show', compact('items'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $item = article::findOrFail($id);
+        return view('articles.edit', compact('item'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        //
+        article::where('id', $id)->update([
+            'title' => request()->title,
+            'category' => request()->category,
+            'body' => request()->body,
+            'slug' => Str::slug(request()->title, '_')
+        ]);
+        return redirect('/dashboard');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

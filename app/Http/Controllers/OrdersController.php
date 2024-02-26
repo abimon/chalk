@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\cart;
 use App\Models\Mpesa;
 use App\Models\order;
-use App\Models\product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;

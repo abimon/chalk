@@ -40,9 +40,9 @@
                                 <td>{{$key+1}}</td>
                                 <td><a href="/article/view/{{$article->slug}}">{{$article->title}}</a></td>
                                 <td>{{$article->category}}</td>
-                                <td>{{$likes->where('post_id',$article->id)->count()}} <i class="fa fa-heart"></i></td>
-                                <td>{{$comments->where('post_id',$article->id)->count()}} <i class="fa fa-comment"></i></td>
-                                <td><a href="/article/edit/{{$article->id}}"><i class="fa fa-pen"></i></a></td>
+                                <td>{{$article->likes->where('post_id',$article->id)->count()}} <i class="fa fa-heart"></i></td>
+                                <td>{{$article->comments->where('post_id',$article->id)->count()}} <i class="fa fa-comment"></i></td>
+                                <td><a href="{{route('article.edit',$article->id)}}"><i class="fa fa-pen"></i></a></td>
                                 <td><a href="#" data-toggle="modal" data-target="#destroy{{$key+1}}"><i class="fa fa-trash text-danger"></i></a></td>
                                 <div class="modal fade" id="destroy{{$key+1}}" tabindex="-1" role="dialog" aria-labelledby="edit{{$key+1}}Label" aria-hidden="true">
                                     <div class="modal-dialog" role="document">

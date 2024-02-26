@@ -12,7 +12,7 @@
                     <img class="img-fluid mb-4 " style="width: 50px;" src="{{asset('storage/assets/img/pickup.gif')}}" alt="">
                     <h4 class="mb-3">Transport Services</h4>
                     <p class="mb-4">Hire a Pick-up truck for only Kshs 2950* per day</p>
-                    
+
                     <p>Make inquiry before payment by calling, <a href="tel:+254705325860">+254 705 325860</a></p>
                     <p><i><small>*The fees includes the drivers' fee, but excludes fuel</small>.</i></p>
                     <a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Book</a>
@@ -55,7 +55,7 @@
                                         <div class="row mb-3">
                                             <label for="location" class="col-md-4 col-form-label text-md-end">{{ __('Demand Location') }}</label>
                                             <div class="col-md-8">
-                                                <input id="location" type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ old('location') }}" required autocomplete="location" >
+                                                <input id="location" type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ old('location') }}" required autocomplete="location">
 
                                                 @error('location')
                                                 <span class="invalid-feedback" role="alert">
@@ -67,7 +67,7 @@
                                         <div class="row mb-3">
                                             <label for="for" class="col-md-4 col-form-label text-md-end">{{ __('Demanded Date') }}</label>
                                             <div class="col-md-8">
-                                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}" required >
+                                                <input id="date" type="date" class="form-control @error('date') is-invalid @enderror" name="date" value="{{ old('date') }}" required>
                                                 @error('date')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -78,7 +78,7 @@
                                         <div class="row mb-3">
                                             <label for="duration" class="col-md-4 col-form-label text-md-end">{{ __('Duration(days)') }}</label>
                                             <div class="col-md-8">
-                                                <input id="duration" type="number" class="form-control @error('duration') is-invalid @enderror" name="duration" value="{{ old('duration') }}" required autocomplete="duration" >
+                                                <input id="duration" type="number" class="form-control @error('duration') is-invalid @enderror" name="duration" value="{{ old('duration') }}" required autocomplete="duration">
                                                 @error('duration')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -89,7 +89,7 @@
                                         <div class="row mb-3">
                                             <label for="desc" class="col-md-4 col-form-label text-md-end">{{ __('Short description of the work to be done') }}</label>
                                             <div class="col-md-8">
-                                                <textarea id="desc" type="number" class="form-control @error('desc') is-invalid @enderror" name="desc" value="{{ old('desc') }}" required ></textarea>
+                                                <textarea id="desc" type="number" class="form-control @error('desc') is-invalid @enderror" name="desc" value="{{ old('desc') }}" required></textarea>
                                                 @error('desc')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -128,4 +128,5 @@
         </div>
     </div>
 </div>
+
 @endsection

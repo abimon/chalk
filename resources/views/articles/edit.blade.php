@@ -1,8 +1,9 @@
 @extends('layouts.dash')
 @section('content')
 <div>
-    <form method="post" action="/article/update/{{$item->id}}" enctype="multipart/form-data">
+    <form method="post" action="{{route('article.update',$item->id)}}" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
         <div class="modal-body">
             <div class="row mb-2">
                 <div class="col-md-6">

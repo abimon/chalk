@@ -16,8 +16,8 @@ class article extends Model
         'author'
     ];
 
-    public function author(){
-        return $this->belongsTo(User::class, 'id', 'author');
+    public function writer(){
+        return $this->belongsTo(User::class, 'author', 'id');
     }
     public function comments()
     {

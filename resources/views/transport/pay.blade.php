@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-header">{{ __('Make Payment') }}</div>
                 <div class="card-body">
-                    <form method="POST" action="transport/pay/{{$service->id)}}">
+                    <form method="POST" action="/transport/pay/{{$service->id}}">
                         @csrf
                         <div class="row mb-3">
                             <label for="contact" class="col-md-4 col-form-label text-md-end">{{ __('Phone No.') }}</label>

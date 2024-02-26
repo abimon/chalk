@@ -17,7 +17,7 @@ else{
             <div class="">
                 <div class="section-header text-start  wow fadeInUp mt-2" data-wow-delay="0.1s">
                     <h1 class="display-5 mb-2">{{$item->title}}</h1>
-                    <h4>By {{$item->author}}</h4>
+                    <h4>By {{$item->writer->name}}</h4>
                 </div>
             </div>
         </div>
@@ -30,13 +30,13 @@ else{
         <h3>{{$comments->count()}} Comment(s)</h3>
         <div>
             @foreach($comments as $comment)
-            <p><i class='fa fa-user'></i> <b>{{$comment->name}}: </b>{{$comment->comment}}</p>
+            <p><i class='fa fa-user'></i> <b>{{$comment->user->name}}: </b>{{$comment->comment}}</p>
             
             @endforeach
         </div>
         <p>{{$likes->count()}}<i class="fa fa-heart"></i> {{$views->count()}}<i class="fa fa-eye"></i></p>
         @guest
-        <form action="/article/comment/{{$item->id}}" method="post" class = 'card p-2'>
+        <form action="{{route('comment.store',['post_id'=>$item->id])}}" method="post" class = 'card p-2'>
             @csrf
             <div class="mb-3">
                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" placeholder='Your Name' name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
@@ -75,11 +75,11 @@ else{
         </form>
         @else
             @if($likes->contains('user_id',Auth()->user()->id))
-            <a href="/article/like/{{$item->id}}">Unlike <i class="fa fa-heart text-secondary"></i></a>
+            <a href="{{route('like.create',['post_id'=>$item->id])}}">Unlike <i class="fa fa-heart text-danger"></i></a>
             @else
-            <a href="/article/like/{{$item->id}}">Like <i class="fa fa-heart"></i></a>
+            <a href="{{route('like.create',['post_id'=>$item->id])}}">Like <i class="fa fa-heart"></i></a>
             @endif
-            <form action="/article/comment/{{$item->id}}" method="post">
+            <form action="{{route('comment.store',['post_id'=>$item->id])}}" method="post">
             @csrf
             <div class="input-group mb-3">
                 <input type="text" name="comment" id="" class="form-control" placeholder="Your comment goes here...">

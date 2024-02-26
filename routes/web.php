@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\CartsController;
 use App\Http\Controllers\CommentsController;
+use App\Http\Controllers\LikesController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\viewsController;
 use App\Http\Controllers\ProductController;
@@ -30,7 +31,18 @@ Route::controller(viewsController::class)->group(function(){
     Route::get('/products','products');
     Route::get('/products/{category}','categorized');
     Route::get('/services','services');
+    Route::get('/articles','articles');
+    Route::get('/article/view/{slug}','articleShow');
 });
+Route::controller(TransportController::class)->prefix('/transport/')->group(function(){
+    Route::post('create','create');
+    Route::post('pay/{id}','pay');
+    Route::get('index','index');
+});
+Route::resources([
+    'like'=>LikesController::class,
+    'comment'=>CommentsController::class,
+]);
 
 /*********************************
  AUTH ROUTES
@@ -45,13 +57,8 @@ Route::middleware('auth')->group(function(){
         'product'=>ProductController::class,
         'order'=>OrdersController::class,
         'cart'=>CartsController::class,
-        'comment'=>CommentsController::class,
         'article'=>ArticlesController::class
     ]);
     Route::get('returnPdf',[ProductController::class,'returnPdf']);
     
-});
-Route::controller(TransportController::class)->prefix('/transport/')->group(function(){
-    Route::post('create','create');
-    Route::post('pay','pay');
 });

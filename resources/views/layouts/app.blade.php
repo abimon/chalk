@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="utf-8">
-     @isset($title)
+    @isset($title)
     <title>Health & Life Centre - {{$title}}</title>
     @else
     <title>Health & Life Centre </title>
     @endisset
-    
+
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="health, life, sanatorium, online, ecommerce, healthandlife, center, books, organic, plants, school, lifestyle," name="keywords">
     @isset($descr)
@@ -104,18 +104,18 @@
                     </div>
 
                     @endif
+
+
                     <div class='nav-item nav-link'>
-                        <a class="btn-sm-square bg-white rounded-circle" href="/cart">
-                            
-                            <div class="bg-secondary rounded text-white position-absolute end-0 top-0 m-4 py-1 px-3 pz-1"><small class="fa fa-shopping-bag text-body"></small> 
+                        <a class="btn-sm-square bg-white rounded-pill text-secondary" href="{{route('cart.index')}}"> 
                             @guest
-                            @else
-                            <?php 
-                            $carts = App\Models\cart::where('buyer_id',auth()->user()->id)
-                            ?>
-                            {{$carts->count()}}
-                            @endguest
-                        </div>
+                            <small class="fa fa-shopping-cart"></small>
+                                @else
+                                <?php
+                                $carts = App\Models\cart::where('buyer_id', auth()->user()->id)
+                                ?>
+                                <small class="fa fa-shopping-cart"></small> {{$carts->count()}}
+                                @endguest
                         </a>
                     </div>
 
@@ -188,18 +188,19 @@
     <!-- JavaScript Libraries -->
     <!--Start of Tawk.to Script-->
     // <script type="text/javascript">
-    //     var Tawk_API = Tawk_API || {},
-    //         Tawk_LoadStart = new Date();
-    //     (function() {
-    //         var s1 = document.createElement("script"),
-    //             s0 = document.getElementsByTagName("script")[0];
-    //         s1.async = true;
-    //         s1.src = 'https://embed.tawk.to/65151a6ce6bed319d003acf5/1hbd6uehc';
-    //         s1.charset = 'UTF-8';
-    //         s1.setAttribute('crossorigin', '*');
-    //         s0.parentNode.insertBefore(s1, s0);
-    //     })();
-    // </script>
+        //     var Tawk_API = Tawk_API || {},
+        //         Tawk_LoadStart = new Date();
+        //     (function() {
+        //         var s1 = document.createElement("script"),
+        //             s0 = document.getElementsByTagName("script")[0];
+        //         s1.async = true;
+        //         s1.src = 'https://embed.tawk.to/65151a6ce6bed319d003acf5/1hbd6uehc';
+        //         s1.charset = 'UTF-8';
+        //         s1.setAttribute('crossorigin', '*');
+        //         s0.parentNode.insertBefore(s1, s0);
+        //     })();
+        // 
+    </script>
     <!--End of Tawk.to Script-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

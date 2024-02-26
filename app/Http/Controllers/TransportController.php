@@ -64,12 +64,11 @@ class TransportController extends Controller
     }
     function lipa($codec, $contact, $amount, $state)
     {
-        $phone = $contact;
         $amount = $amount;
         $code = str_replace('+', '', substr('254', 0, 1)) . substr('254', 1);
-        $originalStr = $phone;
-        $prefix = substr($originalStr, 0, 1);
-        $contact = str_replace('0', $code, $prefix) . substr($originalStr, 1);
+        $prefix = substr($contact, 0, 1);
+        $phone = str_replace('0', $code, $prefix) . substr($contact, 1);
+        // dd($phone);
         $url = (env('MPESA_ENV') == 'live') ? 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest' : 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
@@ -80,9 +79,9 @@ class TransportController extends Controller
             'Timestamp' => date('YmdHis'),
             'TransactionType' => 'CustomerPayBillOnline',
             'Amount' => $amount,
-            'PartyA' => $contact,
+            'PartyA' => $phone,
             'PartyB' => env('MPESA_SHORT_CODE'),
-            'PhoneNumber' => $contact,
+            'PhoneNumber' => $phone,
             'CallBackURL' => 'https://healthandlifecentre.com/api/transport/callback/' . $codec,
             'AccountReference' => $state,
             'TransactionDesc' => $state,
@@ -111,7 +110,7 @@ class TransportController extends Controller
             'location'=>request()->location,
             'desc'=>request()->desc,
             'duration'=>request()->duration,
-            'value'=>request()->value,
+            'value'=>(request()->duration)*2950,
             'balance'=>$amount,
             'date'=>request()->date
         ]);
@@ -120,7 +119,7 @@ class TransportController extends Controller
     }
 
     public function pay($id){
-        $res=$this->lipa($id,request()->phone,request()->amount,'Payment for transport service.');
+        $res=$this->lipa($id,request()->contact,request()->amount,'Payment for transport service.');
         if($res->ResponseCode==0){
             return redirect('/')->with('message','Payment successful');
         }

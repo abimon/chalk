@@ -28,7 +28,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            @foreach($items as $key=>$item)
+                            <tr>
+                                <td>{{$key+1}}</td>
+                                <td>{{$item->name}}</td>
+                                <td>{{$item->contact}}</td>
+                                <td>{{$item->location}}</td>
+                                <td>{{$item->date}}</td>
+                                <td>{{$item->duration}} day(s)</td>
+                                <td>{{$item->balance}}</td>
+                                <td>
+                                    @if($item->status==1)
+                                    Done
+                                    @else
+                                    Not Yet
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     @else
